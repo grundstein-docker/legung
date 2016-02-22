@@ -19,6 +19,7 @@ function init_submodules() {
 
   echo "init submodules"
   git submodule init
+  git submodule update
   echo "init submodules finished"
 }
 
