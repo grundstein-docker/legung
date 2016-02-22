@@ -1,4 +1,4 @@
-# wizardsatwork/grundstein
+# grundsteinlegung
 
 Grundstein (plural Grundsteine) [german]
 
@@ -10,29 +10,34 @@ That is the cornerstone of any meaningful debate about budgets and projects, reg
 
 via: [wiktionary](https://en.wiktionary.org/wiki/grundstein)
 
-runs docker instances of the various services we use:
-gitlab
-redmine
-openresty/nginx
-postgres
-redis
-mail
+runs docker instances of the various webservices we use:
+*[gitlab](https://github.com/grundstein/gitlab)
+*[redmine](https://github.com/grundstein/redmine)
+*[openresty](https://github.com/grundstein/openresty)
+*[redis](https://github.com/grundstein/redis)
+*[postgres](https://github.com/grundstein/postgres)
+*[mongodb](https://github.com/grundstein/mongodb)
+*[rocketchat](https://github.com/grundstein/rocketchat)
 
 #### Usage:
 ```bash
   # run docker containers
-  make
+  git clone git@github.com:grundstein/legung grundstein.legung
+  cd grundstein.legung
 
-  #then just:
-  xdg-open http://gitlab
+  # init git submodules
+  make init
 
-  # stop container
+  # build and run all containers
+  make deploy
+
+  # stop containers
   make stop
 
-  # remove container
+  # remove containers
   make remove
 
-  # update container
+  # update containers
   make update
 
 ```
