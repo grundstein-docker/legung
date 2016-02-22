@@ -16,3 +16,6 @@
 [submodule "rocketchat"]
 	path = rocketchat
 	url = git@github.com:grundstein/rocketchat.git
+[submodule "openresty"]
+	path = openresty
+	url = git@github.com:grundstein/openresty
