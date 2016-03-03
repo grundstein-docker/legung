@@ -15,11 +15,12 @@ function stop() {
 function debug() {
   $PWD/cli.sh build debug
 
-  echo "connecting to container $CONTAINER_NAME-debug"
+  echo "connecting to container $CONTAINER_NAME"
   docker run \
     --interactive \
-    --name "$CONTAINER_NAME-debug" \
-    --entrypoint=sh "$CONTAINER_NAME-debug"
+    --tty \
+    --name "$CONTAINER_NAME" \
+    --entrypoint=sh "$CONTAINER_NAME"
 }
 
 function remove() {
