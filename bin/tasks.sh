@@ -13,7 +13,8 @@ function stop() {
 }
 
 function debug() {
-  $PWD/cli.sh build debug
+  $PWD/cli.sh remove
+  $PWD/cli.sh build
 
   echo "connecting to container $CONTAINER_NAME"
   docker run \
