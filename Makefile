@@ -86,11 +86,17 @@ build:
 run:
 	@${MAKE} \
 		redis-run \
-		postgres-run \
-		ips \
+		postgres-run
+
+	@./bin/create_ip_env.sh
+
+	@${MAKE} \
 		gitlab-run \
 		redmine-run \
-		ips \
+
+	@./bin/create_ip_env.sh
+
+	@${MAKE} \
 		openresty-run
 
 clean:
