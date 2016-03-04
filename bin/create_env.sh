@@ -200,7 +200,6 @@ echo "\
 export CONTAINER_NAME=magic-rocketchat
 export HOSTNAME=rocket.wiznwit.com
 
-
 export CONTAINER_PORT_3000=3000
 export HOST_PORT_3000=ROCKETCHAT_HOST_PORT
 
