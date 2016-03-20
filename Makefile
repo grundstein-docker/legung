@@ -32,6 +32,7 @@ BACKUP_DIR=../backups
 	redis-debug \
 	openresty \
 	openresty-build \
+	openresty-magic-build \
 	openresty-run \
 	openresty-logs \
 	openresty-rm \
@@ -223,6 +224,9 @@ openresty: openresty-build openresty-run openresty-logs
 
 openresty-build:
 	@cd ${OPENRESTY_DIR}; ./cli.sh build
+
+openresty-magic-build:
+	@cd ${OPENRESTY_DIR}; ./cli.sh magic-build
 
 openresty-run:
 	@cd ${OPENRESTY_DIR}; ./cli.sh run
