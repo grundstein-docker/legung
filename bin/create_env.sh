@@ -211,5 +211,4 @@ export ROCKETCHAT_DB_NAME=$ROCKETCHAT_DB_NAME
 " > $ROCKETCHAT_FILE
 echo "wrote $ROCKETCHAT_FILE"
 
-
 echo "finished env generation"
