@@ -1,5 +1,9 @@
 #!/bin/bash
 
+SCRIPT=$(readlink -f "$0")
+# Absolute path this script is in, thus /home/user/bin
+SCRIPT_PATH=$(dirname "$SCRIPT")
+
 function logs() {
   echo "connecting to container logs: $CONTAINER_NAME"
   docker logs --follow $CONTAINER_NAME
@@ -33,7 +37,7 @@ function remove() {
 }
 
 function ip() {
-  ip=$(python ../../../bin/ip.py $CONTAINER_NAME)
-  echo "container $CONTAINER_NAME started with ip: $ip"
+  ip=$(python $PWD/../bin/ip.py $CONTAINER_NAME)
+  echo "container $CONTAINER_NAME ip: $ip"
   echo $ip > $PWD/IP.txt
 }
