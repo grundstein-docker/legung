@@ -6,6 +6,7 @@ POSTGRES_DIR=postgres
 GITLAB_DIR=gitlab
 REDMINE_DIR=redmine
 MONGO_DIR=mongodb
+MAGIC_DIR=magic
 BACKUP_DIR=../backups
 
 .PHONY: \
@@ -32,11 +33,16 @@ BACKUP_DIR=../backups
 	redis-debug \
 	openresty \
 	openresty-build \
-	openresty-magic-build \
 	openresty-run \
 	openresty-logs \
 	openresty-rm \
 	openresty-debug \
+	magic-build \
+	magic-run \
+	magic-debug \
+	magic-logs \
+	magic-rm \
+	magic-stop \
 	gitlab \
 	gitlab-build \
 	gitlab-run \
@@ -225,9 +231,6 @@ openresty: openresty-build openresty-run openresty-logs
 openresty-build:
 	@cd ${OPENRESTY_DIR}; ./cli.sh build
 
-openresty-magic-build:
-	@cd ${OPENRESTY_DIR}; ./cli.sh magic-build
-
 openresty-run:
 	@cd ${OPENRESTY_DIR}; ./cli.sh run
 
@@ -295,66 +298,77 @@ mongo-rm:
 mongo-stop:
 	@cd ${MONGO_DIR}; ./cli.sh stop
 
-# host tasks
+# MAGIC tasks
 
-hosts:
-	@echo "building hosts"
-	@for dir in $$(ls ${HOSTS_DIR}); do \
-		host_dir=${HOSTS_DIR}/$$dir; \
-		if [ -d $$host_dir ]; then \
-			echo "building host $$dir"; \
-			cd $$host_dir; \
-			${MAKE} build; \
-		else \
-			echo "not a host directory $$host_dir"; \
-		fi; \
-	done;
+magic: magic-build magic-run
 
-hosts-status:
-	@echo "getting host status"
-	@for dir in $$(ls ${HOSTS_DIR}); do \
-		echo "host: $$dir git status"; \
-		cd ${HOSTS_DIR}/$$dir; \
-		git status; \
-	done;
+magic-run:
+	@cd ${MAGIC_DIR}; ./cli.sh run
 
-hosts-update:
-	@echo "updating hosts"
-	@for dir in $$(ls ${HOSTS_DIR}); do \
-		echo "host: $$dir git pull"; \
-		cd ${HOSTS_DIR}/$$dir; \
-		git pull; \
-		echo "host: $$dir update done"; \
-	done;
+magic-build:
+	@cd ${MAGIC_DIR}; ./cli.sh build
 
-hosts-install:
-	@echo "installing host dependencies"
-	@for dir in $$(ls ${HOSTS_DIR}); do \
-		echo "host: $$dir install dependencies"; \
-		cd ${HOSTS_DIR}/$$dir; \
-		npm install; \
-		echo "host: $$dir dependencies installed"; \
-	done;
+magic-rm:
+	@cd ${MAGIC_DIR}; ./cli.sh remove
+
+magic-stop:
+	@cd ${MAGIC_DIR}; ./cli.sh stop
 
 
 # help output
 
 help:
 	@echo "\
+GrundSteinLegung V0.0.1 Help \n\
 Usage \n\
 make TASK\n\
-	deploy    - runs all build tasks in a row, \n\
-	build-all - builds all containers \n\
-	run-all   - runs all containers \n\
+deploy    - runs and builds all containers \n\
+build     - builds all containers \n\
+run       - runs all containers \n\
+ps        - show all running containers \n\
+env       - generates environment vars for all containers \n\
+ips       - gathers ip addresses of all containers \n\
+stop      - stop all containers \n\
 \n\
-	postgres  - build and run the postgres container \n\
-	redis     - build and run the redis container \n\
-	openresty - build and run the openresty container \n\
-	gitlab    - build and run gitlab \n\
-	soon: redmine   - build and run redmine \n\
+TASKS \n\
+postgres redis gitlab redmine magic openresty \n\
+run make TASK to build and run this \n\
 \n\
-	each of the tasks has a -build and a -run subtask: \n\
-	postgres-build, redis-run. \n\
+SUBTASKS \n\
+Usage \n\
+  make TASK-SUBTASK \n\
+  example make openresty-build \n\
 \n\
-	help      - this help text \n\
+  run   - run the container \n\
+  build - build the container \n\
+  debug - drop into a container bash \n\
+  log   - tail the container logs \n\
+\n\
+HELP TASKS \n\
+help           - this help text \n\
+\n\
+help-postgres  - postgres cli help \n\
+help-redis     - redis cli help \n\
+help-gitlab    - gitlab cli help \n\
+help-redmine   - redmine cli help \n\
+help-magic     - magic cli help \n\
+help-openresty - openresty cli help \n\
 "
+
+help-postgres:
+	@./postgres/cli.sh help
+
+help-redis:
+	@./redis/cli.sh help
+
+help-gitlab:
+	@./gitlab/cli.sh help
+
+help-openresty:
+	@./openresty/cli.sh help
+
+help-redmine:
+	@./redmine/cli.sh help
+
+help-magic:
+	@./magic/cli.sh help
