@@ -31,3 +31,9 @@ function remove() {
   && echo "removed $CONTAINER_NAME" \
   || echo "container $CONTAINER_NAME does not exist"
 }
+
+function ip() {
+  ip=$(python ../../../bin/ip.py $CONTAINER_NAME)
+  echo "container $CONTAINER_NAME started with ip: $ip"
+  echo $ip > $PWD/IP.txt
+}
