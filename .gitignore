@@ -8,3 +8,4 @@ GITLAB_SMTP
 crontab.txt
 .idea
 magic
+mail
