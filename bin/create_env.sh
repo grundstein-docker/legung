@@ -22,6 +22,7 @@ fi
 POSTGRES_FILE=$GENERATED_CWD/postgres/ENV.sh
 REDIS_FILE=$GENERATED_CWD/redis/ENV.sh
 OPENRESTY_FILE=$GENERATED_CWD/openresty/ENV.sh
+NGINX_FILE=$GENERATED_CWD/nginx/ENV.sh
 GITLAB_FILE=$GENERATED_CWD/gitlab/ENV.sh
 REDMINE_FILE=$GENERATED_CWD/redmine/ENV.sh
 MONGODB_FILE=$GENERATED_CWD/mongodb/ENV.sh
@@ -117,20 +118,38 @@ echo "\
 export CONTAINER_NAME=magic-resty
 export CONTAINER_PORT_80=8080
 export HOST_PORT_80=80
-export CONTAINER_PORT_443=443
-export HOST_PORT_443=4343
+export CONTAINER_PORT_443=4343
+export HOST_PORT_443=443
 
 export OUT_DIR=$OUT_DIR
 export SRC_DIR=$SRC_DIR
 
 export EXPORT_PATH=/usr/local/openresty/nginx/sbin
-export VERSION=1.9.7.1
+export VERSION=1.9.12
 export TARGET_DIR=/home/openresty/
 export LUA_SRC_DIR=$SRC_DIR/lua
 export HOST_SRC_DIR=$LUA_SRC_DIR/hosts
 export SBIN=/usr/local/openresty/nginx/sbin
 " > $OPENRESTY_FILE
 echo "wrote $OPENRESTY_FILE"
+
+
+echo "\
+#!/bin/bash
+export CONTAINER_NAME=magic-nginx
+export CONTAINER_PORT_80=8080
+export HOST_PORT_80=80
+export CONTAINER_PORT_443=4343
+export HOST_PORT_443=443
+
+export OUT_DIR=$OUT_DIR
+export SRC_DIR=$SRC_DIR
+
+export VERSION=1.9.12
+export TARGET_DIR=/home/nginx/
+" > $NGINX_FILE
+echo "wrote $NGINX_FILE"
+
 
 echo "\
 #!/bin/bash
@@ -202,21 +221,6 @@ echo "\
 #!/bin/bash
 
 export CONTAINER_NAME=magic-rocketchat
-export HOSTNAME=rocket.wiznwit.com
-
-export CONTAINER_PORT_3000=3000
-export HOST_PORT_3000=ROCKETCHAT_HOST_PORT
-
-export ROCKETCHAT_DB_USER=$ROCKETCHAT_DB_USER
-export ROCKETCHAT_DB_USER=$ROCKETCHAT_DB_PASS
-export ROCKETCHAT_DB_NAME=$ROCKETCHAT_DB_NAME
-" > $ROCKETCHAT_FILE
-echo "wrote $ROCKETCHAT_FILE"
-
-echo "\
-#!/bin/bash
-
-export CONTAINER_NAME=magic-root
 export HOSTNAME=rocket.wiznwit.com
 
 export CONTAINER_PORT_3000=3000
