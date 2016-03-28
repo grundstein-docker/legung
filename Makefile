@@ -1,6 +1,6 @@
 HOSTS_DIR=hosts
 
-OPENRESTY_DIR=openresty
+NGINX_DIR=nginx
 REDIS_DIR=redis
 POSTGRES_DIR=postgres
 GITLAB_DIR=gitlab
@@ -31,12 +31,12 @@ BACKUP_DIR=../backups
 	redis-logs \
 	redis-rm \
 	redis-debug \
-	openresty \
-	openresty-build \
-	openresty-run \
-	openresty-logs \
-	openresty-rm \
-	openresty-debug \
+	nginx \
+	nginx-build \
+	nginx-run \
+	nginx-logs \
+	nginx-rm \
+	nginx-debug \
 	magic-build \
 	magic-run \
 	magic-debug \
@@ -88,7 +88,7 @@ build:
 		postgres-build \
 		gitlab-build \
 		redmine-build \
-		openresty-build
+		nginx-build
 
 run:
 	@${MAKE} \
@@ -104,7 +104,7 @@ run:
 	@./bin/create_ip_env.sh
 
 	@${MAKE} \
-		openresty-run
+		nginx-run
 
 clean:
 	@echo "removing configuration files:"
@@ -118,7 +118,7 @@ stop:
 	@${MAKE} -j5 \
 		postgres-stop \
 		redis-stop \
-		openresty-stop \
+		nginx-stop \
 		gitlab-stop \
 		redmine-stop
 
@@ -139,7 +139,7 @@ backup: gitlab-backup redmine-backup
 
 	echo "backup finished"
 
-	${MAKE} ips openresty
+	${MAKE} ips nginx
 
 init:
 	@./bin/init.sh all
@@ -224,30 +224,30 @@ gitlab-stop:
 gitlab-backup:
 	@cd ${GITLAB_DIR}; ./cli.sh backup
 
-# OPENRESTY tasks
+# NGINX tasks
 
-openresty: openresty-build openresty-run openresty-logs
+nginx: nginx-build nginx-run nginx-logs
 
-openresty-build:
-	@cd ${OPENRESTY_DIR}; ./cli.sh build
+nginx-build:
+	@cd ${NGINX_DIR}; ./cli.sh build
 
-openresty-run:
-	@cd ${OPENRESTY_DIR}; ./cli.sh run
+nginx-run:
+	@cd ${NGINX_DIR}; ./cli.sh run
 
-openresty-logs:
-	cd openresty; ./cli.sh logs
+nginx-logs:
+	cd nginx; ./cli.sh logs
 
-openresty-debug:
-	@cd ${OPENRESTY_DIR}; ./cli.sh debug
+nginx-debug:
+	@cd ${NGINX_DIR}; ./cli.sh debug
 
-openresty-rm:
-	@cd ${OPENRESTY_DIR}; ./cli.sh remove
+nginx-rm:
+	@cd ${NGINX_DIR}; ./cli.sh remove
 
-openresty-clean:
-	@cd ${OPENRESTY_DIR}; ./cli.sh clean
+nginx-clean:
+	@cd ${NGINX_DIR}; ./cli.sh clean
 
-openresty-stop:
-	@cd ${OPENRESTY_DIR}; ./cli.sh stop
+nginx-stop:
+	@cd ${NGINX_DIR}; ./cli.sh stop
 
 
 # REDMINE tasks
@@ -331,13 +331,13 @@ ips       - gathers ip addresses of all containers \n\
 stop      - stop all containers \n\
 \n\
 TASKS \n\
-postgres redis gitlab redmine magic openresty \n\
+postgres redis gitlab redmine magic nginx \n\
 run make TASK to build and run this \n\
 \n\
 SUBTASKS \n\
 Usage \n\
   make TASK-SUBTASK \n\
-  example make openresty-build \n\
+  example make nginx-build \n\
 \n\
   run   - run the container \n\
   build - build the container \n\
@@ -352,7 +352,7 @@ help-redis     - redis cli help \n\
 help-gitlab    - gitlab cli help \n\
 help-redmine   - redmine cli help \n\
 help-magic     - magic cli help \n\
-help-openresty - openresty cli help \n\
+help-nginx - nginx cli help \n\
 "
 
 help-postgres:
@@ -364,8 +364,8 @@ help-redis:
 help-gitlab:
 	@./gitlab/cli.sh help
 
-help-openresty:
-	@./openresty/cli.sh help
+help-nginx:
+	@./nginx/cli.sh help
 
 help-redmine:
 	@./redmine/cli.sh help
