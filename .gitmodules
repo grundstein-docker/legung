@@ -19,3 +19,6 @@
 [submodule "openresty"]
 	path = openresty
 	url = https://github.com/grundstein/openresty
+[submodule "mail/mail-forwarder"]
+	path = mail/mail-forwarder
+	url = git@github.com:grundstein/mail-forwarder
