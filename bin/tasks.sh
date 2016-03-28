@@ -39,5 +39,6 @@ function remove() {
 function ip() {
   ip=$(python $PWD/../bin/ip.py $CONTAINER_NAME)
   echo "container $CONTAINER_NAME ip: $ip"
-  echo $ip > $PWD/IP.txt
+  echo $ip > $PWD/SERVER_IP
 }
+
