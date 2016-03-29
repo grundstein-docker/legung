@@ -30,15 +30,9 @@ function build() {
 }
 
 function run() {
-  redis-run \
+  redis-run
   postgres-run
-
-  ./bin/create_ip_env.sh
-
   gitlab-run
-
-  ./bin/create_ip_env.sh
-
   nginx-run
 }
 
