@@ -1,18 +1,8 @@
-HOSTS_DIR=hosts
-
-NGINX_DIR=nginx
-REDIS_DIR=redis
-POSTGRES_DIR=postgres
-GITLAB_DIR=gitlab
-REDMINE_DIR=redmine
-MONGO_DIR=mongodb
-MAGIC_DIR=magic
-BACKUP_DIR=../backups
+CLI=./cli.sh
 
 .PHONY: \
 	help \
 	all \
-	ips \
 	env \
 	deploy \
 	build \
@@ -37,6 +27,7 @@ BACKUP_DIR=../backups
 	nginx-logs \
 	nginx-rm \
 	nginx-debug \
+        magic \
 	magic-build \
 	magic-run \
 	magic-debug \
@@ -49,311 +40,168 @@ BACKUP_DIR=../backups
 	gitlab-logs \
 	gitlab-rm \
 	gitlab-debug \
-	mongo \
-	mongo-build \
-	mongo-run \
-	mongo-logs \
-	mongo-rm \
-	mongo-debug \
-	redmine \
-	redmine-build \
-	redmine-run \
-	redmine-logs \
-	redmine-rm \
-	redmine-debug \
-	hosts \
-	hosts-build \
-	hosts-run
+
 
 # general
 
 all: help
 
 deploy:
-	@${MAKE} \
-		env \
-		ips \
-		build \
-		run
+	@${CLI} deploy
 
 env:
-	@./bin/create_env.sh
-
-ips:
-	@./bin/create_ip_env.sh
+	@${CLI} env
 
 build:
-	@${MAKE} \
-		redis-build \
-		postgres-build \
-		gitlab-build \
-		redmine-build \
-		nginx-build
+	@${CLI} build
 
 run:
-	@${MAKE} \
-		redis-run \
-		postgres-run
-
-	@./bin/create_ip_env.sh
-
-	@${MAKE} \
-		gitlab-run \
-		redmine-run \
-
-	@./bin/create_ip_env.sh
-
-	@${MAKE} \
-		nginx-run
+	@${CLI} run
 
 clean:
-	@echo "removing configuration files:"
-	@echo "$$(ls -l ./**/ENV.sh)"
-	@rm -f ./**/ENV.sh
+	@${CLI} clean
 
 ps:
 	@docker ps
 
 stop:
-	@${MAKE} -j5 \
-		postgres-stop \
-		redis-stop \
-		nginx-stop \
-		gitlab-stop \
-		redmine-stop
+	@${CLI} stop
 
-backup: gitlab-backup redmine-backup
-	echo "creating backup"
-
-	mkdir -p ${BACKUP_DIR}
-
-	echo "start copying files"
-	cp -rf ./* ${BACKUP_DIR}
-	echo "finished copying files"
-
-	echo "committing changes"
-	cd ${BACKUP_DIR}; \
-	git init && \
-	git add -A ./* && \
-	git commit -m "backup $$(date +\%Y-\%m-\%d-\%H:\%M:\%S)" ./*
-
-	echo "backup finished"
-
-	${MAKE} ips nginx
+backup:
+	@${CLI} backup
 
 init:
-	@./bin/init.sh all
+	@${CLI} init
 
 init_submodules:
-	@./bin/init.sh init_submodules
+	@${CLI} init_submodules
 
 crontab:
-	@./bin/create_crontab.sh
+	@${CLI} crontab
 
 update_submodules:
-	@./bin/init.sh update_submodules
+	@${CLI} update_submodules
+
 
 # POSTGRES tasks
 
-postgres: postgres-build postgres-run postgres-logs
+postgres:
+	@${CLI} postgres
 
 postgres-build:
-	@cd ${POSTGRES_DIR}; ./cli.sh build
+	@${CLI} postgres-build
 
 postgres-run:
-	@cd ${POSTGRES_DIR}; ./cli.sh run
+	@${CLI} postgres-run
 
 postgres-logs:
-	@cd ${POSTGRES_DIR}; ./cli.sh logs
+	@${CLI} postgres-logs
 
 postgres-debug:
-	@cd ${POSTGRES_DIR}; ./cli.sh debug
+	@${CLI} postgres-debug
 
 postgres-rm:
-	@cd ${POSTGRES_DIR}; ./cli.sh remove
+	@${CLI} postgres-rm
 
 postgres-stop:
-	@cd ${POSTGRES_DIR}; ./cli.sh stop
+	@${CLI} postgres-stop
 
 
 # REDIS tasks
 
-redis: redis-build redis-run redis-logs
+redis:
+	@${CLI} redis
 
 redis-build:
-	@cd ${REDIS_DIR}; ./cli.sh build
+	@${CLI} redis-build
 
 redis-run:
-	@cd ${REDIS_DIR}; ./cli.sh run
+	@${CLI} redis-run
 
 redis-logs:
-	@cd ${REDIS_DIR}; ./cli.sh logs
+	@${CLI} redis-logs
 
 redis-debug:
-	@cd ${REDIS_DIR}; ./cli.sh debug
+	@${CLI} redis-debug
 
 redis-rm:
-	@cd ${REDIS_DIR}; ./cli.sh remove
+	@${CLI} redis-rm
 
 redis-stop:
-	@cd ${REDIS_DIR}; ./cli.sh stop
-
+	@${CLI} redis-stop
 
 # GITLAB tasks
 
-gitlab: gitlab-run gitlab-logs
-
-gitlab-run:
-	@cd ${GITLAB_DIR}; ./cli.sh run
+gitlab:
+	@${CLI} gitlab
 
 gitlab-build:
-	@cd ${GITLAB_DIR}; ./cli.sh build
+	@${CLI} gitlab-build
 
-gitlab-debug:
-	@cd ${GITLAB_DIR}; ./cli.sh debug
+gitlab-run:
+	@${CLI} gitlab-run
 
 gitlab-logs:
-	@cd ${GITLAB_DIR}; ./cli.sh logs
+	@${CLI} gitlab-logs
+
+gitlab-debug:
+	@${CLI} gitlab-debug
 
 gitlab-rm:
-	@cd ${GITLAB_DIR}; ./cli.sh remove
+	@${CLI} gitlab-rm
 
 gitlab-stop:
-	@cd ${GITLAB_DIR}; ./cli.sh stop
-
-gitlab-backup:
-	@cd ${GITLAB_DIR}; ./cli.sh backup
+	@${CLI} gitlab-stop
 
 # NGINX tasks
 
-nginx: nginx-build nginx-run nginx-logs
+nginx:
+	@${CLI} nginx
 
 nginx-build:
-	@cd ${NGINX_DIR}; ./cli.sh build
+	@${CLI} nginx-build
 
 nginx-run:
-	@cd ${NGINX_DIR}; ./cli.sh run
+	@${CLI} nginx-run
 
 nginx-logs:
-	cd nginx; ./cli.sh logs
+	@${CLI} nginx-logs
 
 nginx-debug:
-	@cd ${NGINX_DIR}; ./cli.sh debug
+	@${CLI} nginx-debug
 
 nginx-rm:
-	@cd ${NGINX_DIR}; ./cli.sh remove
-
-nginx-clean:
-	@cd ${NGINX_DIR}; ./cli.sh clean
+	@${CLI} nginx-rm
 
 nginx-stop:
-	@cd ${NGINX_DIR}; ./cli.sh stop
+	@${CLI} nginx-stop
 
+nginx-clean:
+	@${CLI} nginx-clean
 
-# REDMINE tasks
-
-redmine: redmine-build redmine-run redmine-logs
-
-redmine-run:
-	@cd ${REDMINE_DIR}; ./cli.sh run
-
-redmine-logs:
-	@cd ${REDMINE_DIR}; ./cli.sh logs
-
-redmine-build:
-	@cd ${REDMINE_DIR}; ./cli.sh build
-
-redmine-debug:
-	@cd ${REDMINE_DIR}; ./cli.sh debug
-
-redmine-rm:
-	@cd ${REDMINE_DIR}; ./cli.sh remove
-
-redmine-stop:
-	@cd ${REDMINE_DIR}; ./cli.sh stop
-
-redmine-backup:
-	@cd ${REDMINE_DIR}; ./cli.sh backup
-
-
-# MONGODB tasks
-
-mongo: mongo-build mongo-run mongo-logs
-
-mongo-run:
-	@cd ${MONGO_DIR}; ./cli.sh run
-
-mongo-logs:
-	@cd ${MONGO_DIR}; ./cli.sh logs
-
-mongo-build:
-	@cd ${MONGO_DIR}; ./cli.sh build
-
-mongo-debug:
-	@cd ${MONGO_DIR}; ./cli.sh debug
-
-mongo-rm:
-	@cd ${MONGO_DIR}; ./cli.sh remove
-
-mongo-stop:
-	@cd ${MONGO_DIR}; ./cli.sh stop
 
 # MAGIC tasks
 
-magic: magic-build magic-run
+magic:
+	@${CLI} magic
 
 magic-run:
-	@cd ${MAGIC_DIR}; ./cli.sh run
+	@${CLI} magic-run
 
 magic-build:
-	@cd ${MAGIC_DIR}; ./cli.sh build
+	@${CLI} magic-build
 
 magic-rm:
-	@cd ${MAGIC_DIR}; ./cli.sh remove
+	@${CLI} magic-remove
 
 magic-stop:
-	@cd ${MAGIC_DIR}; ./cli.sh stop
+	@${CLI} magic-stop
 
 
 # help output
 
 help:
-	@echo "\
-GrundSteinLegung V0.0.1 Help \n\
-Usage \n\
-make TASK\n\
-deploy    - runs and builds all containers \n\
-build     - builds all containers \n\
-run       - runs all containers \n\
-ps        - show all running containers \n\
-env       - generates environment vars for all containers \n\
-ips       - gathers ip addresses of all containers \n\
-stop      - stop all containers \n\
-\n\
-TASKS \n\
-postgres redis gitlab redmine magic nginx \n\
-run make TASK to build and run this \n\
-\n\
-SUBTASKS \n\
-Usage \n\
-  make TASK-SUBTASK \n\
-  example make nginx-build \n\
-\n\
-  run   - run the container \n\
-  build - build the container \n\
-  debug - drop into a container bash \n\
-  log   - tail the container logs \n\
-\n\
-HELP TASKS \n\
-help           - this help text \n\
-\n\
-help-postgres  - postgres cli help \n\
-help-redis     - redis cli help \n\
-help-gitlab    - gitlab cli help \n\
-help-redmine   - redmine cli help \n\
-help-magic     - magic cli help \n\
-help-nginx - nginx cli help \n\
-"
+	@${CLI} help
 
 help-postgres:
 	@./postgres/cli.sh help
