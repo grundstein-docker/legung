@@ -9,3 +9,5 @@ crontab.txt
 .idea
 magic
 mail
+containers/*
+!containers/.gitkeep
