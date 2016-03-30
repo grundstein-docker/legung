@@ -254,7 +254,7 @@ function nginx-run() {
 }
 
 function nginx-logs() {
-  cd nginx; ./cli.sh logs; cd ../..
+  cd ${NGINX_DIR}; ./cli.sh logs; cd ../..
 }
 
 function nginx-debug() {
