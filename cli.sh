@@ -2,12 +2,15 @@
 
 HOSTS_DIR=hosts
 
-NGINX_DIR=nginx
-REDIS_DIR=redis
-POSTGRES_DIR=postgres
-GITLAB_DIR=gitlab
-MONGO_DIR=mongodb
-MAGIC_DIR=magic
+CONTAINER_DIR=containers
+
+NGINX_DIR=$CONTAINER_DIR/nginx
+REDIS_DIR=$CONTAINER_DIR/redis
+POSTGRES_DIR=$CONTAINER_DIR/postgres
+GITLAB_DIR=$CONTAINER_DIR/gitlab
+MONGO_DIR=$CONTAINER_DIR/mongodb
+MAGIC_DIR=$CONTAINER_DIR/magic
+
 BACKUP_DIR=../backups
 
 # general
@@ -100,27 +103,27 @@ function postgres() {
 }
 
 function postgres-build() {
-  cd $POSTGRES_DIR; ./cli.sh build; cd ..
+  cd $POSTGRES_DIR; ./cli.sh build; cd ../..
 }
 
 function postgres-run() {
-  cd $POSTGRES_DIR; ./cli.sh run; cd ..
+  cd $POSTGRES_DIR; ./cli.sh run; cd ../..
 }
 
 function postgres-logs() {
-  cd $POSTGRES_DIR; ./cli.sh logs; cd ..
+  cd $POSTGRES_DIR; ./cli.sh logs; cd ../..
 }
 
 function postgres-debug() {
-  cd $POSTGRES_DIR; ./cli.sh debug; cd ..
+  cd $POSTGRES_DIR; ./cli.sh debug; cd ../..
 }
 
 function postgres-rm() {
-  cd $POSTGRES_DIR; ./cli.sh remove; cd ..
+  cd $POSTGRES_DIR; ./cli.sh remove; cd ../..
 }
 
 function postgres-stop() {
-  cd $POSTGRES_DIR; ./cli.sh stop; cd ..
+  cd $POSTGRES_DIR; ./cli.sh stop; cd ../..
 }
 
 
@@ -133,27 +136,27 @@ function redis() {
 }
 
 function redis-build() {
-  cd ${REDIS_DIR} && ./cli.sh build; cd ..
+  cd ${REDIS_DIR} && ./cli.sh build; cd ../..
 }
 
 function redis-run() {
-  cd ${REDIS_DIR} && ./cli.sh run; cd ..
+  cd ${REDIS_DIR} && ./cli.sh run; cd ../..
 }
 
 function redis-logs() {
-  cd ${REDIS_DIR} && ./cli.sh logs; cd ..
+  cd ${REDIS_DIR} && ./cli.sh logs; cd ../..
 }
 
 function redis-debug() {
-  cd ${REDIS_DIR} && ./cli.sh debug; cd ..
+  cd ${REDIS_DIR} && ./cli.sh debug; cd ../..
 }
 
 function redis-rm() {
-  cd ${REDIS_DIR} && ./cli.sh remove; cd ..
+  cd ${REDIS_DIR} && ./cli.sh remove; cd ../..
 }
 
 function redis-stop() {
-  cd ${REDIS_DIR} && ./cli.sh stop; cd ..
+  cd ${REDIS_DIR} && ./cli.sh stop; cd ../..
 }
 
 # GITLAB tasks
@@ -164,31 +167,31 @@ function gitlab() {
 }
 
 function gitlab-run() {
-  cd ${GITLAB_DIR} && ./cli.sh run; cd ..
+  cd ${GITLAB_DIR} && ./cli.sh run; cd ../..
 }
 
 function gitlab-build() {
-  cd ${GITLAB_DIR} && ./cli.sh build; cd ..
+  cd ${GITLAB_DIR} && ./cli.sh build; cd ../..
 }
 
 function gitlab-debug() {
-  cd ${GITLAB_DIR} && ./cli.sh debug; cd ..
+  cd ${GITLAB_DIR} && ./cli.sh debug; cd ../..
 }
 
 function gitlab-logs() {
-  cd ${GITLAB_DIR} && ./cli.sh logs; cd ..
+  cd ${GITLAB_DIR} && ./cli.sh logs; cd ../..
 }
 
 function gitlab-rm() {
-  cd ${GITLAB_DIR} && ./cli.sh remove; cd ..
+  cd ${GITLAB_DIR} && ./cli.sh remove; cd ../..
 }
 
 function gitlab-stop() {
-  cd ${GITLAB_DIR} && ./cli.sh stop; cd ..
+  cd ${GITLAB_DIR} && ./cli.sh stop; cd ../..
 }
 
 function gitlab-backup() {
-  cd ${GITLAB_DIR} && ./cli.sh backup; cd ..
+  cd ${GITLAB_DIR} && ./cli.sh backup; cd ../..
 }
 
 
@@ -201,31 +204,31 @@ function nginx() {
 }
 
 function nginx-build() {
-  cd ${NGINX_DIR} && ./cli.sh build; cd ..
+  cd ${NGINX_DIR} && ./cli.sh build; cd ../..
 }
 
 function nginx-run() {
-  cd ${NGINX_DIR} && ./cli.sh run; cd ..
+  cd ${NGINX_DIR} && ./cli.sh run; cd ../..
 }
 
 function nginx-logs() {
-  cd nginx; ./cli.sh logs; cd ..
+  cd nginx; ./cli.sh logs; cd ../..
 }
 
 function nginx-debug() {
-  cd ${NGINX_DIR} && ./cli.sh debug; cd ..
+  cd ${NGINX_DIR} && ./cli.sh debug; cd ../..
 }
 
 function nginx-rm() {
-  cd ${NGINX_DIR} && ./cli.sh remove; cd ..
+  cd ${NGINX_DIR} && ./cli.sh remove; cd ../..
 }
 
 function nginx-clean() {
-  cd ${NGINX_DIR} && ./cli.sh clean; cd ..
+  cd ${NGINX_DIR} && ./cli.sh clean; cd ../..
 }
 
 function nginx-stop() {
-  cd ${NGINX_DIR} && ./cli.sh stop; cd ..
+  cd ${NGINX_DIR} && ./cli.sh stop; cd ../..
 }
 
 
@@ -237,19 +240,19 @@ function magic() {
 }
 
 function magic-run() {
-  cd ${MAGIC_DIR} && ./cli.sh run; cd ..
+  cd ${MAGIC_DIR} && ./cli.sh run; cd ../..
 }
 
 function magic-build() {
-  cd ${MAGIC_DIR} && ./cli.sh build; cd ..
+  cd ${MAGIC_DIR} && ./cli.sh build; cd ../..
 }
 
 function magic-rm() {
-  cd ${MAGIC_DIR} && ./cli.sh remove; cd ..
+  cd ${MAGIC_DIR} && ./cli.sh remove; cd ../..
 }
 
 function magic-stop() {
-  cd ${MAGIC_DIR} && ./cli.sh stop; cd ..
+  cd ${MAGIC_DIR} && ./cli.sh stop; cd ../..
 }
 
 # help output
