@@ -40,6 +40,12 @@ CLI=./cli.sh
 	gitlab-logs \
 	gitlab-rm \
 	gitlab-debug \
+	redmine \
+	redmine-build \
+	redmine-run \
+	redmine-logs \
+	redmine-rm \
+	redmine-debug
 
 
 # general
@@ -197,6 +203,29 @@ magic-rm:
 magic-stop:
 	@${CLI} magic-stop
 
+
+# REDMINE tasks
+
+redmine:
+	@${CLI} redmine
+
+redmine-build:
+	@${CLI} redmine-build
+
+redmine-run:
+	@${CLI} redmine-run
+
+redmine-logs:
+	@${CLI} redmine-logs
+
+redmine-debug:
+	@${CLI} redmine-debug
+
+redmine-rm:
+	@${CLI} redmine-rm
+
+redmine-stop:
+	@${CLI} redmine-stop
 
 # help output
 

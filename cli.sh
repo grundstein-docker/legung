@@ -10,6 +10,7 @@ POSTGRES_DIR=$CONTAINER_DIR/postgres
 GITLAB_DIR=$CONTAINER_DIR/gitlab
 MONGO_DIR=$CONTAINER_DIR/mongodb
 MAGIC_DIR=$CONTAINER_DIR/magic
+REDMINE_DIR=$CONTAINER_DIR/redmine
 
 BACKUP_DIR=../backups
 
@@ -29,6 +30,8 @@ function build() {
   redis-build
   postgres-build
   gitlab-build
+  redmine-build
+  magic-build
   nginx-build
 }
 
@@ -36,6 +39,8 @@ function run() {
   redis-run
   postgres-run
   gitlab-run
+  redmine-run
+  magic-run
   nginx-run
 }
 
@@ -192,6 +197,43 @@ function gitlab-stop() {
 
 function gitlab-backup() {
   cd ${GITLAB_DIR} && ./cli.sh backup; cd ../..
+}
+
+
+# REDMINE tasks
+
+function redmine() {
+  redmine-run
+  redmine-logs
+}
+
+
+function redmine-run() {
+  cd ${REDMINE_DIR} && ./cli.sh run; cd ../..
+}
+
+function redmine-build() {
+  cd ${REDMINE_DIR} && ./cli.sh build; cd ../..
+}
+
+function redmine-debug() {
+  cd ${REDMINE_DIR} && ./cli.sh debug; cd ../..
+}
+
+function redmine-logs() {
+  cd ${REDMINE_DIR} && ./cli.sh logs; cd ../..
+}
+
+function redmine-rm() {
+  cd ${REDMINE_DIR} && ./cli.sh remove; cd ../..
+}
+
+function redmine-stop() {
+  cd ${REDMINE_DIR} && ./cli.sh stop; cd ../..
+}
+
+function redmine-backup() {
+  cd ${REDMINE_DIR} && ./cli.sh backup; cd ../..
 }
 
 
