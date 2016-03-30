@@ -27,7 +27,7 @@ CLI=./cli.sh
 	nginx-logs \
 	nginx-rm \
 	nginx-debug \
-        magic \
+	magic \
 	magic-build \
 	magic-run \
 	magic-debug \
