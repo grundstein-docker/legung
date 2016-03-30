@@ -7,7 +7,7 @@ GENERATED_CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 GENERATED_POSTGRES_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_REDIS_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_GITLAB_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
-# GENERATED_REDMINE_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
+GENERATED_REDMINE_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 # GENERATED_MONGO_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 # GENERATED_ROCKETCHAT_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 SECRET_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
@@ -19,20 +19,21 @@ else
   echo $GITLAB_SECRETS_DB_KEY_BASE >> ./GITLAB_SECRETS_DB_KEY_BASE
 fi
 
-POSTGRES_FILE=$GENERATED_CWD/postgres/ENV.sh
-REDIS_FILE=$GENERATED_CWD/redis/ENV.sh
-OPENRESTY_FILE=$GENERATED_CWD/openresty/ENV.sh
-NGINX_FILE=$GENERATED_CWD/nginx/ENV.sh
-GITLAB_FILE=$GENERATED_CWD/gitlab/ENV.sh
-# REDMINE_FILE=$GENERATED_CWD/redmine/ENV.sh
-# MONGODB_FILE=$GENERATED_CWD/mongodb/ENV.sh
-# ROCKETCHAT_FILE=$GENERATED_CWD/rocketchat/ENV.sh
-MAGIC_FILE=$GENERATED_CWD/magic/ENV.sh
+CONTAINER_DIR=$GENERATED_CWD/containers
+POSTGRES_FILE=$CONTAINER_DIR/postgres/ENV.sh
+REDIS_FILE=$CONTAINER_DIR/redis/ENV.sh
+OPENRESTY_FILE=$CONTAINER_DIR/openresty/ENV.sh
+NGINX_FILE=$CONTAINER_DIR/nginx/ENV.sh
+GITLAB_FILE=$CONTAINER_DIR/gitlab/ENV.sh
+REDMINE_FILE=$CONTAINER_DIR/redmine/ENV.sh
+# MONGODB_FILE=$CONTAINER_DIR/mongodb/ENV.sh
+# ROCKETCHAT_FILE=$CONTAINER_DIR/rocketchat/ENV.sh
+MAGIC_FILE=$CONTAINER_DIR/magic/ENV.sh
 
-# REDMINE_CONFIG_DIR=$GENERATED_CWD/redmine/config
-# REDMINE_DB_CONFIG_FILE=$REDMINE_CONFIG_DIR/database.yml
-# REDMINE_SECRET_CONFIG_FILE=$REDMINE_CONFIG_DIR/secret.yml
-# REDMINE_RAILS_ENV=production
+REDMINE_CONFIG_DIR=$CONTAINER_DIR/redmine/config
+REDMINE_DB_CONFIG_FILE=$REDMINE_CONFIG_DIR/database.yml
+REDMINE_SECRET_CONFIG_FILE=$REDMINE_CONFIG_DIR/secret.yml
+REDMINE_RAILS_ENV=production
 
 POSTGRES_USER_NAME=postgres
 POSTGRES_DATABASE=postgres
@@ -42,9 +43,9 @@ GITLAB_DB_USER=gitlab
 GITLAB_DB_PASS=$GENERATED_GITLAB_DB_PASS
 GITLAB_DB_NAME=gitlabhq_production
 
-# REDMINE_DB_USER=redmine
-# REDMINE_DB_PASS=$GENERATED_REDMINE_DB_PASS
-# REDMINE_DB_NAME=redmine_production
+REDMINE_DB_USER=redmine
+REDMINE_DB_PASS=$GENERATED_REDMINE_DB_PASS
+REDMINE_DB_NAME=redmine_production
 
 # ROCKETCHAT_DB_USER=rocketchat
 # ROCKETCHAT_DB_DATABASE=rocketchat
@@ -52,7 +53,7 @@ GITLAB_DB_NAME=gitlabhq_production
 
 GITLAB_HOST_PORT_80=80
 GITLAB_HOST_PORT_443=443
-# REDMINE_HOST_PORT=8889
+REDMINE_HOST_PORT=8889
 # ROCKETCHAT_HOST_PORT=8890
 
 echo "\
@@ -86,10 +87,10 @@ export GITLAB_DB_USER=$GITLAB_DB_USER
 export GITLAB_DB_PASS=$GITLAB_DB_PASS
 export GITLAB_DB_NAME=$GITLAB_DB_NAME
 
-# export REDMINE_DB_USER=$REDMINE_DB_USER
-# export REDMINE_DB_PASS=$REDMINE_DB_PASS
-# export REDMINE_DB_NAME=$REDMINE_DB_NAME
-# export REDMINE_DB_PORT=$POSTGRES_PORT
+export REDMINE_DB_USER=$REDMINE_DB_USER
+export REDMINE_DB_PASS=$REDMINE_DB_PASS
+export REDMINE_DB_NAME=$REDMINE_DB_NAME
+export REDMINE_DB_PORT=$POSTGRES_PORT
 " > $POSTGRES_FILE
 echo "wrote $POSTGRES_FILE"
 
@@ -177,28 +178,28 @@ $(cat ./GITLAB_GITHUB_KEYS)
 " > $GITLAB_FILE
 echo "wrote $GITLAB_FILE"
 
-# echo "\
-# #!/bin/bash
+echo "\
+#!/bin/bash
 
-# export CONTAINER_NAME=magic-redmine
-# export HOSTNAME=redmine.wiznwit.com
+export CONTAINER_NAME=magic-redmine
+export HOSTNAME=redmine.wiznwit.com
 
-# export SECRET_KEY_BASE=$SECRET_KEY_BASE
+export SECRET_KEY_BASE=$SECRET_KEY_BASE
 
-# export POSTGRES_CONTAINER_NAME=magic-postgres
+export POSTGRES_CONTAINER_NAME=magic-postgres
 
-# export USER=redmine
-# export GROUP=redmine
-# export WORKDIR=/usr/src/redmine
+export USER=redmine
+export GROUP=redmine
+export WORKDIR=/usr/src/redmine
 
-# export HOST_PORT_80=$REDMINE_HOST_PORT
-# export CONTAINER_PORT_80=3000
+export HOST_PORT_80=$REDMINE_HOST_PORT
+export CONTAINER_PORT_80=3000
 
-# export REDMINE_DB_USER=$REDMINE_DB_USER
-# export REDMINE_DB_PASS=$REDMINE_DB_PASS
-# export REDMINE_DB_NAME=$REDMINE_DB_NAME
-# " > $REDMINE_FILE
-# echo "wrote $REDMINE_FILE"
+export REDMINE_DB_USER=$REDMINE_DB_USER
+export REDMINE_DB_PASS=$REDMINE_DB_PASS
+export REDMINE_DB_NAME=$REDMINE_DB_NAME
+" > $REDMINE_FILE
+echo "wrote $REDMINE_FILE"
 
 # echo "\
 # #!/bin/bash
