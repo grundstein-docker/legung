@@ -47,9 +47,9 @@ function run() {
 }
 
 function clean() {
-  echo "removing configuration files:"
-  echo "$$(ls -l ./**/ENV.sh)"
+  echo-start "removing config files"
   rm -f ./**/ENV.sh
+  echo-finished "removing config files"
 }
 
 function ps() {
@@ -57,16 +57,18 @@ function ps() {
 }
 
 function stop() {
+  echo-start "stopping containers"
   postgres-stop
   redis-stop
   nginx-stop
   gitlab-stop
+  echo-finished "stopping containers"
 }
 
 function backup() {
   gitlab-backup
 
-  echo "creating backup"
+  echo-start "creating backup"
 
   mkdir -p $BACKUP_DIR
 
@@ -81,29 +83,43 @@ function backup() {
   git add -A ./* && \
   git commit -m "backup $$(date +\%Y-\%m-\%d-\%H:\%M:\%S)" ./*
 
-  echo "backup finished"
+  echo-finished "backup finished"
 
   nginx
 }
 
 function crontab() {
-  ./bin/create_crontab.sh
+  echo-start "create crontab"
+
+  CRONTAB_FILE=$PWD/crontab.txt
+
+  rm -f $CRONTAB_FILE
+
+  echo "23 05 * * * \"cd ${PWD} && make backup\" > /dev/null" >> $CRONTAB_FILE
+
+  crontab $CRONTAB_FILE
+
+  echo-finished "create crontab"
 }
 
-function git-status-containers() {
+function container-status() {
+  echo-start $@
 
-  for container_dir in $(ls ./containers/); do \
-    if [ -d ./containers/$container_dir ]; then
-      cd ./containers/$container_dir && git status && cd ../../
-    fi
-  done
+  loop-dirs ./containers status
+
+  echo-finished $@
 }
 
-function update-containers() {
+function container-update() {
+  echo-start $@
+
   loop-dirs ./containers update
+
+  echo-finished $@
 }
 
-function update-magic() {
+function magic-update() {
+  echo-start $@
 
   root_dir=./containers/magic
   make -C $root_dir update
@@ -111,13 +127,14 @@ function update-magic() {
   hosts_dir=$root_dir/hosts
 
   loop-dirs $hosts_dir update
+
+  echo-finished $@
 }
 
 function update() {
-  update-containers
+  container-update
 
-  update-magic
-
+  magic-update
 }
 
 # POSTGRES tasks
