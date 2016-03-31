@@ -84,20 +84,26 @@ function backup() {
   nginx
 }
 
-function init() {
-  ./bin/init.sh all
-}
-
-function init_submodules() {
-  ./bin/init.sh init_submodules
-}
-
 function crontab() {
   ./bin/create_crontab.sh
 }
 
-function update_submodules() {
-  ./bin/init.sh update_submodules
+function git-status-containers() {
+
+  for container_dir in $(ls ./containers/); do \
+    if [ -d ./containers/$container_dir ]; then
+      git status ./containers/$container_dir
+    fi
+  done;
+}
+
+
+function git-pull-containers() {
+  for container_dir in $(ls ./containers/); do \
+    if [ -d ./containers/$container_dir ]; then
+      cd ./containers/$container_dir && git pull && cd ../../
+    fi
+  done;
 }
 
 # POSTGRES tasks
