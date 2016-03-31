@@ -146,27 +146,27 @@ function postgres() {
 }
 
 function postgres-build() {
-  cd $POSTGRES_DIR; ./cli.sh build; cd ../..
+  make -C $POSTGRES_DIR build
 }
 
 function postgres-run() {
-  cd $POSTGRES_DIR; ./cli.sh run; cd ../..
+  make -C $POSTGRES_DIR run
 }
 
 function postgres-logs() {
-  cd $POSTGRES_DIR; ./cli.sh logs; cd ../..
+  make -C $POSTGRES_DIR logs
 }
 
 function postgres-debug() {
-  cd $POSTGRES_DIR; ./cli.sh debug; cd ../..
+  make -C $POSTGRES_DIR debug
 }
 
 function postgres-rm() {
-  cd $POSTGRES_DIR; ./cli.sh remove; cd ../..
+  make -C $POSTGRES_DIR remove
 }
 
 function postgres-stop() {
-  cd $POSTGRES_DIR; ./cli.sh stop; cd ../..
+  make -C $POSTGRES_DIR stop
 }
 
 
@@ -179,27 +179,27 @@ function redis() {
 }
 
 function redis-build() {
-  cd ${REDIS_DIR} && ./cli.sh build; cd ../..
+  make -C $REDIS_DIR build
 }
 
 function redis-run() {
-  cd ${REDIS_DIR} && ./cli.sh run; cd ../..
+  make -C $REDIS_DIR run
 }
 
 function redis-logs() {
-  cd ${REDIS_DIR} && ./cli.sh logs; cd ../..
+  make -C $REDIS_DIR logs
 }
 
 function redis-debug() {
-  cd ${REDIS_DIR} && ./cli.sh debug; cd ../..
+  make -C $REDIS_DIR debug
 }
 
 function redis-rm() {
-  cd ${REDIS_DIR} && ./cli.sh remove; cd ../..
+  make -C $REDIS_DIR remove
 }
 
 function redis-stop() {
-  cd ${REDIS_DIR} && ./cli.sh stop; cd ../..
+  make -C $REDIS_DIR stop
 }
 
 # GITLAB tasks
@@ -210,31 +210,31 @@ function gitlab() {
 }
 
 function gitlab-run() {
-  cd ${GITLAB_DIR} && ./cli.sh run; cd ../..
+  make -C $GITLAB_DIR run
 }
 
 function gitlab-build() {
-  cd ${GITLAB_DIR} && ./cli.sh build; cd ../..
+  make -C $GITLAB_DIR build
 }
 
 function gitlab-debug() {
-  cd ${GITLAB_DIR} && ./cli.sh debug; cd ../..
+  make -C $GITLAB_DIR debug
 }
 
 function gitlab-logs() {
-  cd ${GITLAB_DIR} && ./cli.sh logs; cd ../..
+  make -C $GITLAB_DIR logs
 }
 
 function gitlab-rm() {
-  cd ${GITLAB_DIR} && ./cli.sh remove; cd ../..
+  make -C $GITLAB_DIR remove
 }
 
 function gitlab-stop() {
-  cd ${GITLAB_DIR} && ./cli.sh stop; cd ../..
+  make -C $GITLAB_DIR stop
 }
 
 function gitlab-backup() {
-  cd ${GITLAB_DIR} && ./cli.sh backup; cd ../..
+  make -C $GITLAB_DIR backup
 }
 
 
@@ -247,31 +247,31 @@ function redmine() {
 
 
 function redmine-run() {
-  cd ${REDMINE_DIR} && ./cli.sh run; cd ../..
+  make -C $REDMINE_DIR run
 }
 
 function redmine-build() {
-  cd ${REDMINE_DIR} && ./cli.sh build; cd ../..
+  make -C $REDMINE_DIR build
 }
 
 function redmine-debug() {
-  cd ${REDMINE_DIR} && ./cli.sh debug; cd ../..
+  make -C $REDMINE_DIR debug
 }
 
 function redmine-logs() {
-  cd ${REDMINE_DIR} && ./cli.sh logs; cd ../..
+  make -C $REDMINE_DIR logs
 }
 
 function redmine-rm() {
-  cd ${REDMINE_DIR} && ./cli.sh remove; cd ../..
+  make -C $REDMINE_DIR remove
 }
 
 function redmine-stop() {
-  cd ${REDMINE_DIR} && ./cli.sh stop; cd ../..
+  make -C $REDMINE_DIR stop
 }
 
 function redmine-backup() {
-  cd ${REDMINE_DIR} && ./cli.sh backup; cd ../..
+  make -C $REDMINE_DIR backup
 }
 
 
@@ -284,31 +284,31 @@ function nginx() {
 }
 
 function nginx-build() {
-  cd ${NGINX_DIR} && ./cli.sh build; cd ../..
+  make -C $NGINX_DIR build
 }
 
 function nginx-run() {
-  cd ${NGINX_DIR} && ./cli.sh run; cd ../..
+  make -C $NGINX_DIR run
 }
 
 function nginx-logs() {
-  cd ${NGINX_DIR}; ./cli.sh logs; cd ../..
+  cd ${NGINX_DIR}; ./cli.sh logs
 }
 
 function nginx-debug() {
-  cd ${NGINX_DIR} && ./cli.sh debug; cd ../..
+  make -C $NGINX_DIR debug
 }
 
 function nginx-rm() {
-  cd ${NGINX_DIR} && ./cli.sh remove; cd ../..
+  make -C $NGINX_DIR remove
 }
 
 function nginx-clean() {
-  cd ${NGINX_DIR} && ./cli.sh clean; cd ../..
+  make -C $NGINX_DIR clean
 }
 
 function nginx-stop() {
-  cd ${NGINX_DIR} && ./cli.sh stop; cd ../..
+  make -C $NGINX_DIR stop
 }
 
 
@@ -320,19 +320,19 @@ function magic() {
 }
 
 function magic-run() {
-  cd ${MAGIC_DIR} && ./cli.sh run; cd ../..
+  make -C $MAGIC_DIR run
 }
 
 function magic-build() {
-  cd ${MAGIC_DIR} && ./cli.sh build; cd ../..
+  make -C $MAGIC_DIR build
 }
 
 function magic-rm() {
-  cd ${MAGIC_DIR} && ./cli.sh remove; cd ../..
+  make -C $MAGIC_DIR remove
 }
 
 function magic-stop() {
-  cd ${MAGIC_DIR} && ./cli.sh stop; cd ../..
+  make -C $MAGIC_DIR stop
 }
 
 # help output
