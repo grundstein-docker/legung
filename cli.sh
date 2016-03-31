@@ -157,9 +157,13 @@ function magic-update() {
 }
 
 function update() {
+  echo-start "update"
+
   container-update
 
   magic-update
+
+  echo-finished "update"
 }
 
 # POSTGRES tasks
