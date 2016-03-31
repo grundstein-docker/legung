@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 SCRIPT=$(readlink -f "$0")
 # Absolute path this script is in, thus /home/user/bin
 SCRIPT_PATH=$(dirname "$SCRIPT")
@@ -77,19 +78,19 @@ function loop-dirs() {
 }
 
 function update() {
-  echo-start "git pull"
+  echo-start "update"
 
   git pull
 
-  echo-finished "git pull"
+  echo-finished "update"
 }
 
 function status() {
-  echo-start $@
+  echo-start "status"
 
   git status
 
-  echo-finished $@
+  echo-finished "status"
 }
 
 function echo-start() {
