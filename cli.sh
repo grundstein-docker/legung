@@ -92,7 +92,7 @@ function git-status-containers() {
 
   for container_dir in $(ls ./containers/); do \
     if [ -d ./containers/$container_dir ]; then
-      git status ./containers/$container_dir
+      cd ./containers/$container_dir && git status && cd ../../
     fi
   done;
 }
