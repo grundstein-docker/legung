@@ -76,17 +76,8 @@ stop:
 backup:
 	@${CLI} backup
 
-init:
-	@${CLI} init
-
-init_submodules:
-	@${CLI} init_submodules
-
 crontab:
 	@${CLI} crontab
-
-update_submodules:
-	@${CLI} update_submodules
 
 
 # POSTGRES tasks
@@ -226,6 +217,15 @@ redmine-rm:
 
 redmine-stop:
 	@${CLI} redmine-stop
+
+# container git helpers
+
+git-status-containers:
+	@${CLI} git-status-containers
+
+git-pull-containers:
+	@${CLI} git-pull-containers
+
 
 # help output
 
