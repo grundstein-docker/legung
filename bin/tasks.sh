@@ -42,3 +42,21 @@ function ip() {
   echo $ip > $PWD/SERVER_IP
 }
 
+function loop-dirs() {
+  echo "START: loop over hosts in dir $1 with make task $2"
+  root_dir=$1
+  task=$2
+
+  for sub_dir in $(ls $root_dir); do \
+    full_dir=$root_dir/$sub_dir
+    if [ -f $full_dir/Makefile ]; then
+      echo "running 'make $task' in $full_dir"
+      make -C $full_dir $task
+      echo "SUCCESS: 'make $task' finished"
+    else
+      echo "FAIL: no Makefile found in: $full_dir"
+    fi
+  done
+
+  echo "FINISHED: loop over hosts"
+}
