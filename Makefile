@@ -223,10 +223,10 @@ redmine-stop:
 update:
 	@${CLI} $@
 
-containers-status:
+container-status:
 	@${CLI} $@
 
-containers-update:
+container-update:
 	@${CLI} $@
 
 
