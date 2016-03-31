@@ -5,45 +5,60 @@ SCRIPT=$(readlink -f "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
 function logs() {
-  echo "connecting to container logs: $CONTAINER_NAME"
+  echo-start $@
+
   docker logs --follow $CONTAINER_NAME
+
+  echo-finished $@
 }
 
 function stop() {
-  echo "stopping $CONTAINER_NAME"
+  echo-start $@
+
   docker stop $CONTAINER_NAME \
   && echo "stopped $CONTAINER_NAME" \
   || echo "container $CONTAINER_NAME not started"
+
+  echo-finished $@
 }
 
 function debug() {
-  $PWD/cli.sh remove
-  $PWD/cli.sh build
+  remove
+  build
 
-  echo "connecting to container $CONTAINER_NAME"
+  echo-start $@
+
   docker run \
     --interactive \
     --tty \
     --name "$CONTAINER_NAME" \
     --entrypoint=sh "$CONTAINER_NAME"
+
+  echo-finished $@
 }
 
 function remove() {
-  echo "removing container $CONTAINER_NAME"
+  echo-start $@
   stop \
   && docker rm $CONTAINER_NAME \
   && echo "removed $CONTAINER_NAME" \
   || echo "container $CONTAINER_NAME does not exist"
+
+  echo-finished $@
 }
 
 function ip() {
+  echo-start $@
+
   ip=$(python $PWD/../../bin/ip.py $CONTAINER_NAME)
   echo "container $CONTAINER_NAME ip: $ip"
   echo $ip > $PWD/SERVER_IP
+
+  echo-finished $@
 }
 
 function loop-dirs() {
-  echo "START: loop over hosts in dir $1 with make task $2"
+  echo-start "loop over hosts in dir $1 with make task $2"
   root_dir=$1
   task=$2
 
@@ -58,5 +73,29 @@ function loop-dirs() {
     fi
   done
 
-  echo "FINISHED: loop over hosts"
+  echo-finished "loop over hosts"
+}
+
+function update() {
+  echo-start "git pull"
+
+  git pull
+
+  echo-finished "git pull"
+}
+
+function status() {
+  echo-start $@
+
+  git status
+
+  echo-finished $@
+}
+
+function echo-start() {
+  echo "START: $@ in $CONTAINER_NAME"
+}
+
+function echo-finished() {
+  echo "FINISHED: $@ in $CONTAINER_NAME"
 }
