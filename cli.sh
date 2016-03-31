@@ -69,7 +69,8 @@ function backup() {
   mkdir -p $BACKUP_DIR
 
   echo "start copying files"
-  cp -rf ./* $BACKUP_DIR
+  cp -rf ./* $BACKUP_DIR/grundstein/
+  cp -rf ../data $BACKUP_DIR/
   echo "finished copying files"
 
   echo "committing changes"
