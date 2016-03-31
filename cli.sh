@@ -14,6 +14,8 @@ REDMINE_DIR=$CONTAINER_DIR/redmine
 
 BACKUP_DIR=../backups
 
+source ./bin/tasks.sh
+
 # general
 
 function deploy() {
@@ -94,16 +96,28 @@ function git-status-containers() {
     if [ -d ./containers/$container_dir ]; then
       cd ./containers/$container_dir && git status && cd ../../
     fi
-  done;
+  done
 }
 
+function update-containers() {
+  loop-dirs ./containers update
+}
 
-function git-pull-containers() {
-  for container_dir in $(ls ./containers/); do \
-    if [ -d ./containers/$container_dir ]; then
-      cd ./containers/$container_dir && git pull && cd ../../
-    fi
-  done;
+function update-magic() {
+
+  root_dir=./containers/magic
+  make -C $root_dir update
+
+  hosts_dir=$root_dir/hosts
+
+  loop-dirs $hosts_dir update
+}
+
+function update() {
+  update-containers
+
+  update-magic
+
 }
 
 # POSTGRES tasks

@@ -220,11 +220,14 @@ redmine-stop:
 
 # container git helpers
 
-git-status-containers:
-	@${CLI} git-status-containers
+update:
+	@${CLI} $@
 
-git-pull-containers:
-	@${CLI} git-pull-containers
+containers-status:
+	@${CLI} $@
+
+containers-update:
+	@${CLI} $@
 
 
 # help output
