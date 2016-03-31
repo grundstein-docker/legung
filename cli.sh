@@ -104,6 +104,16 @@ function crontab() {
   echo-finished "create crontab"
 }
 
+function status() {
+  echo-start "status"
+
+  container-status
+
+  magic-status
+
+  echo-finished "status"
+}
+
 function container-status() {
   echo-start "container-status"
 
@@ -118,6 +128,19 @@ function container-update() {
   loop-dirs ./containers update
 
   echo-finished "container-update"
+}
+
+function magic-status() {
+  echo-start "magic-status"
+
+  root_dir=./containers/magic
+  make -C $root_dir status
+
+  hosts_dir=$root_dir/hosts
+
+  loop-dirs $hosts_dir status
+
+  echo-finished "magic-status"
 }
 
 function magic-update() {
