@@ -4,6 +4,8 @@ HOSTS_DIR=hosts
 
 CONTAINER_DIR=containers
 
+CONTAINER_NAME="grundstein/legung"
+
 NGINX_DIR=$CONTAINER_DIR/nginx
 REDIS_DIR=$CONTAINER_DIR/redis
 POSTGRES_DIR=$CONTAINER_DIR/postgres
@@ -47,9 +49,9 @@ function run() {
 }
 
 function clean() {
-  echo-start "removing config files"
+  echo-start "clean"
   rm -f ./**/ENV.sh
-  echo-finished "removing config files"
+  echo-finished "clean"
 }
 
 function ps() {
@@ -103,23 +105,23 @@ function crontab() {
 }
 
 function container-status() {
-  echo-start $@
+  echo-start "container-status"
 
   loop-dirs ./containers status
 
-  echo-finished $@
+  echo-finished "container-status"
 }
 
 function container-update() {
-  echo-start $@
+  echo-start "container-update"
 
   loop-dirs ./containers update
 
-  echo-finished $@
+  echo-finished "container-update"
 }
 
 function magic-update() {
-  echo-start $@
+  echo-start "magic-update"
 
   root_dir=./containers/magic
   make -C $root_dir update
@@ -128,7 +130,7 @@ function magic-update() {
 
   loop-dirs $hosts_dir update
 
-  echo-finished $@
+  echo-finished "magic-update"
 }
 
 function update() {
