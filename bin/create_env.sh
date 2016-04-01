@@ -4,7 +4,7 @@ echo "Start env generation"
 
 GENERATED_CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 
-DATA_DIR=$GENERATED_CWD/../data/
+DATA_DIR=$GENERATED_CWD/../data
 
 mkdir -p $DATA_DIR
 
