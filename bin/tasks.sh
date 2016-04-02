@@ -100,3 +100,11 @@ function echo-start() {
 function echo-finished() {
   echo "FINISHED: $@ in $CONTAINER_NAME"
 }
+
+function echo-success() {
+  echo "SUCCESS: $@ in $CONTAINER_NAME"
+}
+
+function echo-fail() {
+  echo "FAIL: $@ in $CONTAINER_NAME"
+}
