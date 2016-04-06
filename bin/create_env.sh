@@ -8,11 +8,17 @@ DATA_DIR=$GENERATED_CWD/../data
 
 mkdir -p $DATA_DIR
 
+GITLAB_CONTAINER_NAME='magic-gitlab'
+REDIS_CONTAINER_NAME='magic-redis'
+REDMINE_CONTAINER_NAME='magic-redmine'
+NGINX_CONTAINER_NAME='magic-nginx'
+POSTGRES_CONTAINER_NAME='magic-postgres'
+
 GENERATED_POSTGRES_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_REDIS_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_GITLAB_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 GENERATED_REDMINE_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
-GENERATED_TAIGA_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
+# GENERATED_TAIGA_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 # GENERATED_MONGO_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 # GENERATED_ROCKETCHAT_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
 SECRET_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
@@ -24,12 +30,12 @@ else
   echo $GITLAB_SECRETS_DB_KEY_BASE >> ./GITLAB_SECRETS_DB_KEY_BASE
 fi
 
-if [ -f "./TAIGA_SECRETS_DB_KEY_BASE" ]; then
-  TAIGA_SECRETS_DB_KEY_BASE=$(cat ./TAIGA_SECRETS_DB_KEY_BASE)
-else
-  TAIGA_SECRETS_DB_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
-  echo $TAIGA_SECRETS_DB_KEY_BASE >> ./TAIGA_SECRETS_DB_KEY_BASE
-fi
+# if [ -f "./TAIGA_SECRETS_DB_KEY_BASE" ]; then
+#   TAIGA_SECRETS_DB_KEY_BASE=$(cat ./TAIGA_SECRETS_DB_KEY_BASE)
+# else
+#   TAIGA_SECRETS_DB_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | stdbuf -o0 head --bytes 55)"
+#   echo $TAIGA_SECRETS_DB_KEY_BASE >> ./TAIGA_SECRETS_DB_KEY_BASE
+# fi
 
 CONTAINER_DIR=$GENERATED_CWD/containers
 POSTGRES_FILE=$CONTAINER_DIR/postgres/ENV.sh
@@ -38,8 +44,8 @@ OPENRESTY_FILE=$CONTAINER_DIR/openresty/ENV.sh
 NGINX_FILE=$CONTAINER_DIR/nginx/ENV.sh
 GITLAB_FILE=$CONTAINER_DIR/gitlab/ENV.sh
 REDMINE_FILE=$CONTAINER_DIR/redmine/ENV.sh
-TAIGA_BACK_FILE=$CONTAINER_DIR/taiga-back/ENV.sh
-TAIGA_FRONT_FILE=$CONTAINER_DIR/taiga-front/ENV.sh
+# TAIGA_BACK_FILE=$CONTAINER_DIR/taiga-back/ENV.sh
+# TAIGA_FRONT_FILE=$CONTAINER_DIR/taiga-front/ENV.sh
 # MONGODB_FILE=$CONTAINER_DIR/mongodb/ENV.sh
 # ROCKETCHAT_FILE=$CONTAINER_DIR/rocketchat/ENV.sh
 MAGIC_FILE=$CONTAINER_DIR/magic/ENV.sh
@@ -61,9 +67,9 @@ REDMINE_DB_USER=redmine
 REDMINE_DB_PASS=$GENERATED_REDMINE_DB_PASS
 REDMINE_DB_NAME=redmine_production
 
-TAIGA_DB_USER=taiga
-TAIGA_DB_PASS=$GENERATED_TAIGA_DB_PASS
-TAIGA_DB_NAME=taiga_production
+# TAIGA_DB_USER=taiga
+# TAIGA_DB_PASS=$GENERATED_TAIGA_DB_PASS
+# TAIGA_DB_NAME=taiga_production
 
 # ROCKETCHAT_DB_USER=rocketchat
 # ROCKETCHAT_DB_DATABASE=rocketchat
@@ -73,11 +79,11 @@ GITLAB_HOST_PORT_80=80
 GITLAB_HOST_PORT_443=443
 REDMINE_HOST_PORT=8889
 # ROCKETCHAT_HOST_PORT=8890
-TAIGA_BACK_HOST_PORT_80=8891
-TAIGA_FRONT_HOST_PORT_80=8892
+# TAIGA_BACK_HOST_PORT_80=8891
+# TAIGA_FRONT_HOST_PORT_80=8892
 
-TAIGA_FRONT_HOST_NAME=taiga.wiznwit.com
-TAIGA_BACK_HOST_NAME=taiga.wiznwit.com
+# TAIGA_FRONT_HOST_NAME=taiga.wiznwit.com
+# TAIGA_BACK_HOST_NAME=taiga.wiznwit.com
 GITLAB_HOST_NAME=gitlab.wiznwit.com
 REDMINE_HOST_NAME=redmine.wiznwit.com
 
@@ -99,7 +105,7 @@ export DB=$POSTGRES_DATABASE
 export HOST_PORT=$POSTGRES_PORT
 
 # postgres container settings
-export CONTAINER_NAME=magic-postgres
+export CONTAINER_NAME=$POSTGRES_CONTAINER_NAME
 
 # this is the internal port of the container
 export CONTAINER_PORT=5432
@@ -126,7 +132,7 @@ echo "wrote $POSTGRES_FILE"
 echo "\
 #!/bin/bash
 
-export CONTAINER_NAME=magic-redis
+export CONTAINER_NAME=$REDIS_CONTAINER_NAME
 export USER_NAME=wnwredis
 export USER_ID=23523
 export DIR=/home/redis
@@ -163,7 +169,7 @@ SRC_DIR="./src"
 
 echo "\
 #!/bin/bash
-export CONTAINER_NAME=magic-nginx
+export CONTAINER_NAME=$NGINX_CONTAINER_NAME
 export CONTAINER_PORT_80=8080
 export HOST_PORT_80=80
 export CONTAINER_PORT_443=4343
@@ -182,7 +188,7 @@ echo "wrote $NGINX_FILE"
 echo "\
 #!/bin/bash
 
-export CONTAINER_NAME=magic-gitlab
+export CONTAINER_NAME=$GITLAB_CONTAINER_NAME
 export HOSTNAME=$GITLAB_HOST_NAME
 export DATA_DIR=$DATA_DIR
 
@@ -209,12 +215,12 @@ echo "wrote $GITLAB_FILE"
 echo "\
 #!/bin/bashHOST_
 
-export CONTAINER_NAME=magic-redmine
+export CONTAINER_NAME=$REDMINE_CONTAINER_NAME
 export HOSTNAME=$REDMINE_HOST_NAME
 
 export SECRET_KEY_BASE=$SECRET_KEY_BASE
 
-export POSTGRES_CONTAINER_NAME=magic-postgres
+export POSTGRES_CONTAINER_NAME=$POSTGRES_CONTAINER_NAME
 
 export USER=redmine
 export GROUP=redmine
@@ -228,47 +234,50 @@ export REDMINE_DB_USER=$REDMINE_DB_USER
 export REDMINE_DB_PASS=$REDMINE_DB_PASS
 export REDMINE_DB_NAME=$REDMINE_DB_NAME
 
+export GITLAB_CONTAINER_NAME=$GITLAB_CONTAINER_NAME
+
 $(cat ./REDMINE_SMTP)
 
 " > $REDMINE_FILE
 echo "wrote $REDMINE_FILE"
 
-echo "\
-#!/bin/bash
+# echo "\
+# #!/bin/bash
 
-export CONTAINER_NAME=magic-taiga-back
-export HOSTNAME=$TAIGA_BACK_HOST_NAME
+# export CONTAINER_NAME=magic-taiga-back
+# export HOSTNAME=$TAIGA_BACK_HOST_NAME
 
-export POSTGRES_CONTAINER_NAME=magic-postgres
+# export POSTGRES_CONTAINER_NAME=$POSTGRES_CONTAINER_NAME
 
-export HOST_PORT_80=$TAIGA_BACK_HOST_PORT_80
+# export HOST_PORT_80=$TAIGA_BACK_HOST_PORT_80
 
-export TAIGA_SECRETS_DB_KEY_BASE=$TAIGA_SECRETS_DB_KEY_BASE
+# export TAIGA_SECRETS_DB_KEY_BASE=$TAIGA_SECRETS_DB_KEY_BASE
 
-export FROM_EMAIL=$FROM_EMAIL
+# export FROM_EMAIL=$FROM_EMAIL
 
-" > $TAIGA_BACK_FILE
-echo "wrote $TAIGA_BACK_FILE"
+# " > $TAIGA_BACK_FILE
+# echo "wrote $TAIGA_BACK_FILE"
 
-echo "\
-#!/bin/bash
+# echo "\
+# #!/bin/bash
 
-export CONTAINER_NAME=magic-taiga-front
-export HOSTNAME=$TAIGA_FRONT_HOST_NAME
+# export CONTAINER_NAME=magic-taiga-front
+# export HOSTNAME=$TAIGA_FRONT_HOST_NAME
 
-export POSTGRES_CONTAINER_NAME=magic-postgres
+# export POSTGRES_CONTAINER_NAME=$POSTGRES_CONTAINER_NAME
 
-export USER=taiga
-export GROUP=taiga
+# export USER=taiga
+# export GROUP=taiga
 
-export TAIGA_BACK_HOST_PORT_80=$TAIGA_BACK_HOST_PORT_80
-export $TAIGA_FRONT_HOST_PORT_80=$TAIGA_FRONT_HOST_PORT_80
+# export TAIGA_BACK_HOST_PORT_80=$TAIGA_BACK_HOST_PORT_80
+# export $TAIGA_FRONT_HOST_PORT_80=$TAIGA_FRONT_HOST_PORT_80
 
-export TAIGA_DB_USER=$TAIGA_DB_USER
-export TAIGA_DB_PASS=$TAIGA_DB_PASS
-export TAIGA_DB_NAME=$TAIGA_DB_NAME
-" > $TAIGA_FRONT_FILE
-echo "wrote $TAIGA_FRONT_FILE"
+# export TAIGA_DB_USER=$TAIGA_DB_USER
+# export TAIGA_DB_PASS=$TAIGA_DB_PASS
+# export TAIGA_DB_NAME=$TAIGA_DB_NAME
+# " > $TAIGA_FRONT_FILE
+# echo "wrote $TAIGA_FRONT_FILE"
+
 # echo "\
 # #!/bin/bash
 
