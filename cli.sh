@@ -76,7 +76,7 @@ function backup() {
 
   echo "start copying files"
 
-  tar -cf ../backups/backup-$(date +\%Y-\%m-\%d-\%H:\%M:\%S).tar ../data/
+  tar -cf ../backups/backup-$(date +\%Y-\%m-\%d-\%H-\%M-\%S).tar ../data/
 
   echo-finished "backup finished"
 
@@ -85,7 +85,7 @@ function backup() {
   # nginx
 }
 
-function crontab() {
+function create-crontab() {
   echo-start "create crontab"
 
   CRONTAB_FILE=$PWD/crontab.txt
