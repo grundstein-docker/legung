@@ -68,26 +68,21 @@ function stop() {
 }
 
 function backup() {
-  gitlab-backup
+  stop
 
   echo-start "creating backup"
 
   mkdir -p $BACKUP_DIR
 
   echo "start copying files"
-  cp -rf ./* $BACKUP_DIR/grundstein/
-  cp -rf ../data $BACKUP_DIR/
-  echo "finished copying files"
 
-  echo "committing changes"
-  cd $BACKUP_DIR && \
-  git init && \
-  git add -A ./* && \
-  git commit -m "backup $$(date +\%Y-\%m-\%d-\%H:\%M:\%S)" ./*
+  tar -cf ../backups/backup-$(date +\%Y-\%m-\%d-\%H:\%M:\%S).tar ../data/
 
   echo-finished "backup finished"
 
-  nginx
+  run
+  # sleep 30
+  # nginx
 }
 
 function crontab() {
