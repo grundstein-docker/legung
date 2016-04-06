@@ -5,6 +5,7 @@ hosts/*
 GITLAB_SECRETS_DB_KEY_BASE
 GITLAB_GITHUB_KEYS
 GITLAB_SMTP
+REDMINE_SMTP
 crontab.txt
 .idea
 magic
