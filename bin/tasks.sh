@@ -2,32 +2,32 @@
 
 
 SCRIPT=$(readlink -f "$0")
-# Absolute path this script is in, thus /home/user/bin
+# Absolute path this script is in
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
 function logs() {
-  echo-start $@
+  echo-start "logs"
 
   docker logs --follow $CONTAINER_NAME
 
-  echo-finished $@
+  echo-finished "logs"
 }
 
 function stop() {
-  echo-start $@
+  echo-start "stop"
 
   docker stop $CONTAINER_NAME \
   && echo "stopped $CONTAINER_NAME" \
   || echo "container $CONTAINER_NAME not started"
 
-  echo-finished $@
+  echo-finished "stop"
 }
 
 function debug() {
   remove
   build
 
-  echo-start $@
+  echo-start "debug"
 
   docker run \
     --interactive \
@@ -35,27 +35,27 @@ function debug() {
     --name "$CONTAINER_NAME" \
     --entrypoint=sh "$CONTAINER_NAME"
 
-  echo-finished $@
+  echo-finished "debug"
 }
 
 function remove() {
-  echo-start $@
+  echo-start "remove"
   stop \
   && docker rm $CONTAINER_NAME \
   && echo "removed $CONTAINER_NAME" \
   || echo "container $CONTAINER_NAME does not exist"
 
-  echo-finished $@
+  echo-finished "remove"
 }
 
 function ip() {
-  echo-start $@
+  echo-start "get ip"
 
   ip=$(python $PWD/../../bin/ip.py $CONTAINER_NAME)
   echo "container $CONTAINER_NAME ip: $ip"
   echo $ip > $PWD/SERVER_IP
 
-  echo-finished $@
+  echo-finished "get ip"
 }
 
 function loop-dirs() {
