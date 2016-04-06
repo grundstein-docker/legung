@@ -53,31 +53,31 @@ CLI=./cli.sh
 all: help
 
 deploy:
-	@${CLI} deploy
+	@${CLI} $@
 
 env:
-	@${CLI} env
+	@${CLI} $@
 
 build:
-	@${CLI} build
+	@${CLI} $@
 
 run:
-	@${CLI} run
+	@${CLI} $@
 
 clean:
-	@${CLI} clean
+	@${CLI} $@
 
 ps:
 	@docker ps
 
 stop:
-	@${CLI} stop
+	@${CLI} $@
 
 backup:
-	@${CLI} backup
+	@${CLI} $@
 
-crontab:
-	@${CLI} crontab
+create-crontab:
+	@${CLI} $@
 
 
 # POSTGRES tasks
@@ -86,137 +86,137 @@ postgres:
 	@${CLI} postgres
 
 postgres-build:
-	@${CLI} postgres-build
+	@${CLI} $@
 
 postgres-run:
-	@${CLI} postgres-run
+	@${CLI} $@
 
 postgres-logs:
-	@${CLI} postgres-logs
+	@${CLI} $@
 
 postgres-debug:
-	@${CLI} postgres-debug
+	@${CLI} $@
 
 postgres-rm:
-	@${CLI} postgres-rm
+	@${CLI} $@
 
 postgres-stop:
-	@${CLI} postgres-stop
+	@${CLI} $@
 
 
 # REDIS tasks
 
 redis:
-	@${CLI} redis
+	@${CLI} $@
 
 redis-build:
-	@${CLI} redis-build
+	@${CLI} $@
 
 redis-run:
-	@${CLI} redis-run
+	@${CLI} $@
 
 redis-logs:
-	@${CLI} redis-logs
+	@${CLI} $@
 
 redis-debug:
-	@${CLI} redis-debug
+	@${CLI} $@
 
 redis-rm:
-	@${CLI} redis-rm
+	@${CLI} $@
 
 redis-stop:
-	@${CLI} redis-stop
+	@${CLI} $@
 
 # GITLAB tasks
 
 gitlab:
-	@${CLI} gitlab
+	@${CLI} $@
 
 gitlab-build:
-	@${CLI} gitlab-build
+	@${CLI} $@
 
 gitlab-run:
-	@${CLI} gitlab-run
+	@${CLI} $@
 
 gitlab-logs:
-	@${CLI} gitlab-logs
+	@${CLI} $@
 
 gitlab-debug:
-	@${CLI} gitlab-debug
+	@${CLI} $@
 
 gitlab-rm:
-	@${CLI} gitlab-rm
+	@${CLI} $@
 
 gitlab-stop:
-	@${CLI} gitlab-stop
+	@${CLI} $@
 
 # NGINX tasks
 
 nginx:
-	@${CLI} nginx
+	@${CLI} $@
 
 nginx-build:
-	@${CLI} nginx-build
+	@${CLI} $@
 
 nginx-run:
-	@${CLI} nginx-run
+	@${CLI} $@
 
 nginx-logs:
-	@${CLI} nginx-logs
+	@${CLI} $@
 
 nginx-debug:
-	@${CLI} nginx-debug
+	@${CLI} $@
 
 nginx-rm:
-	@${CLI} nginx-rm
+	@${CLI} $@
 
 nginx-stop:
-	@${CLI} nginx-stop
+	@${CLI} $@
 
 nginx-clean:
-	@${CLI} nginx-clean
+	@${CLI} $@
 
 
 # MAGIC tasks
 
 magic:
-	@${CLI} magic
+	@${CLI} $@
 
 magic-run:
-	@${CLI} magic-run
+	@${CLI} $@
 
 magic-build:
-	@${CLI} magic-build
+	@${CLI} $@
 
 magic-rm:
-	@${CLI} magic-remove
+	@${CLI} $@
 
 magic-stop:
-	@${CLI} magic-stop
+	@${CLI} $@
 
 
 # REDMINE tasks
 
 redmine:
-	@${CLI} redmine
+	@${CLI} $@
 
 redmine-build:
-	@${CLI} redmine-build
+	@${CLI} $@
 
 redmine-run:
-	@${CLI} redmine-run
+	@${CLI} $@
 
 redmine-logs:
-	@${CLI} redmine-logs
+	@${CLI} $@
 
 redmine-debug:
-	@${CLI} redmine-debug
+	@${CLI} $@
 
 redmine-rm:
-	@${CLI} redmine-rm
+	@${CLI} $@
 
 redmine-stop:
-	@${CLI} redmine-stop
+	@${CLI} $@
 
 # container git helpers
 
@@ -236,7 +236,7 @@ container-update:
 # help output
 
 help:
-	@${CLI} help
+	@${CLI} $@
 
 help-postgres:
 	@./postgres/cli.sh help
