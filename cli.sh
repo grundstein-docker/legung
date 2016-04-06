@@ -92,7 +92,7 @@ function create-crontab() {
 
   rm -f $CRONTAB_FILE
 
-  echo "23 05 * * * \"cd ${PWD} && make backup\" > /dev/null" >> $CRONTAB_FILE
+  echo "23 05 * * * \"make -C ${PWD} backup\" > /dev/null" >> $CRONTAB_FILE
 
   crontab $CRONTAB_FILE
 
