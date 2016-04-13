@@ -2,6 +2,8 @@
 
 echo "Start env generation"
 
+HOST_NAME=wiznwit.com
+
 GENERATED_CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 
 DATA_DIR=$GENERATED_CWD/../data
@@ -82,12 +84,12 @@ REDMINE_HOST_PORT=8889
 # TAIGA_BACK_HOST_PORT_80=8891
 # TAIGA_FRONT_HOST_PORT_80=8892
 
-# TAIGA_FRONT_HOST_NAME=taiga.wiznwit.com
-# TAIGA_BACK_HOST_NAME=taiga.wiznwit.com
-GITLAB_HOST_NAME=gitlab.wiznwit.com
-REDMINE_HOST_NAME=redmine.wiznwit.com
+# TAIGA_FRONT_HOST_NAME=taiga.$HOST_NAME
+# TAIGA_BACK_HOST_NAME=taiga.$HOST_NAME
+GITLAB_HOST_NAME=gitlab.$HOST_NAME
+REDMINE_HOST_NAME=redmine.$HOST_NAME
 
-FROM_EMAIL="team@wiznwit.com"
+FROM_EMAIL="team@$HOST_NAME"
 
 echo "\
 #!/bin/bash
@@ -298,7 +300,7 @@ echo "wrote $REDMINE_FILE"
 # #!/bin/bash
 
 # export CONTAINER_NAME=magic-rocketchat
-# export HOSTNAME=rocket.wiznwit.com
+# export HOSTNAME=rocket.$HOST_NAME
 
 # export CONTAINER_PORT_3000=3000
 # export HOST_PORT_3000=ROCKETCHAT_HOST_PORT
