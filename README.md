@@ -25,9 +25,6 @@ runs docker instances of the various webservices we use:
   git clone git@github.com:grundstein/legung grundstein.legung
   cd grundstein.legung
 
-  # init git submodules
-  make init
-
   # build and run all containers
   make deploy
 
