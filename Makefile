@@ -4,6 +4,7 @@ CLI=./cli.sh
 	help \
 	all \
 	env \
+	install \
 	deploy \
 	build \
 	run \
@@ -47,10 +48,12 @@ CLI=./cli.sh
 	redmine-rm \
 	redmine-debug
 
-
 # general
 
 all: help
+
+install:
+	@${CLI} $@
 
 deploy:
 	@${CLI} $@

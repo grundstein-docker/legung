@@ -20,6 +20,10 @@ source ./bin/tasks.sh
 
 # general
 
+function install() {
+  ./bin/install.sh
+}
+
 function deploy() {
   env
   build
