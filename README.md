@@ -11,19 +11,27 @@ That is the cornerstone of any meaningful debate about budgets and projects, reg
 via: [wiktionary](https://en.wiktionary.org/wiki/grundstein)
 
 runs docker instances of the various webservices we use:
-*[gitlab](https://github.com/grundstein/gitlab)
-*[redmine](https://github.com/grundstein/redmine)
-*[openresty](https://github.com/grundstein/openresty)
-*[redis](https://github.com/grundstein/redis)
-*[postgres](https://github.com/grundstein/postgres)
-*[mongodb](https://github.com/grundstein/mongodb)
-*[rocketchat](https://github.com/grundstein/rocketchat)
+* [gitlab](https://github.com/grundstein/gitlab)
+* [redmine](https://github.com/grundstein/redmine)
+* [nginx](https://github.com/grundstein/nginx)
+* [redis](https://github.com/grundstein/redis)
+* [postgres](https://github.com/grundstein/postgres)
+
+wip:
+* [postfix](https://github.com/grundstein/postfix)
+* [mongodb](https://github.com/grundstein/mongodb)
+* [rocketchat](https://github.com/grundstein/rocketchat)
+* mariadb
+* wordpress
 
 #### Usage:
 ```bash
   # run docker containers
   git clone git@github.com:grundstein/legung grundstein.legung
   cd grundstein.legung
+
+  # install the docker containers
+  make install
 
   # build and run all containers
   make deploy
@@ -36,5 +44,8 @@ runs docker instances of the various webservices we use:
 
   # update containers
   make update
+
+  # stop, then backup, then restart containers:
+  make backup
 
 ```
