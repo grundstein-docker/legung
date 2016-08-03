@@ -14,4 +14,4 @@ $GIT_CLONE/$GIT_USER/magic ./$CONTAINER_DIR/magic
 $GIT_CLONE/$GIT_USER/nginx ./$CONTAINER_DIR/nginx
 
 $GIT_CLONE/wiznwit/wiznwit.com ./$MAGIC_HOSTS/wiznwit.com
-$GIT_CLONE/wiznwit/wizardsat.work ./$MAGIC_HOSTS/wizardsat.work
+$GIT_CLONE/wizardsatwork/wizardsat.work ./$MAGIC_HOSTS/wizardsat.work
