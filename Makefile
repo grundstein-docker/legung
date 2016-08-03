@@ -258,3 +258,15 @@ help-redmine:
 
 help-magic:
 	@./magic/cli.sh help
+
+remote-backup:
+	ssh  -p 2222 root@77.244.245.117 "cd /root/grundstein.legung && make backup"
+
+copy-latest-backup:
+	echo "$(shell  ssh  -p 2222 root@77.244.245.117 ls -dAprt /root/backups/* | tail -n 1)"
+	scp -P 2222 root@77.244.245.117:"$(shell  ssh  -p 2222 root@77.244.245.117 ls -dAprt /root/backups/* | tail -n 1)" ../backups/ 
+
+unpack-latest-backup:
+	#echo "$(shell cd ../ && ls -dAprt backups/* | tail -n 1)"
+	tar xvf "$(shell ls -dAprt ../backups/* | tail -n 1)" -C ../
+
