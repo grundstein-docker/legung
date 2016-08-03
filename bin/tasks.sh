@@ -1,10 +1,5 @@
 #!/bin/bash
 
-
-SCRIPT=$(readlink -f "$0")
-# Absolute path this script is in
-SCRIPT_PATH=$(dirname "$SCRIPT")
-
 function logs() {
   echo-start "logs"
 
