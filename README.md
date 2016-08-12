@@ -26,9 +26,15 @@ wip:
 
 #### Usage:
 ```bash
-  # run docker containers
-  git clone git@github.com:grundstein/legung grundstein.legung
-  cd grundstein.legung
+  # set up project directories
+  mkdir grundstein grundstein/backups grundstein/bin grundstein/data
+
+  # get all docker containers 
+  cd grundstein
+  git clone git@github.com:grundstein/legung legung
+
+  # admin docker containers
+  cd legung
 
   # install the docker containers
   make install

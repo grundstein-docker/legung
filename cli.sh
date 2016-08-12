@@ -428,15 +428,15 @@ function help-magic() {
   ./magic/cli.sh help
 }
 
-function backup-remote() {
+function remote-backup() {
 	ssh  -p 2222 root@77.244.245.117 "cd /root/grundstein.legung && make backup"
 }
 
-function backup-retrieve() {
+function remote-retrieve() {
 	scp -P 2222 root@77.244.245.117:`ssh  -p 2222 root@77.244.245.117 ls -dAprt /root/backups/* | tail -n 1` ../backups/ 
 }
 
-function backup-unpack() {
+function remote-unpack() {
 	tar xvf `ls -dAprt ../backups/* | tail -n 1` -C ../
 }
 
