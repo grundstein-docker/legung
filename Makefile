@@ -28,13 +28,13 @@ CLI=./cli.sh
 	nginx-logs \
 	nginx-rm \
 	nginx-debug \
-	magic \
-	magic-build \
-	magic-run \
-	magic-debug \
-	magic-logs \
-	magic-rm \
-	magic-stop \
+#	magic \
+#	magic-build \
+#	magic-run \
+#	magic-debug \
+#	magic-logs \
+#	magic-rm \
+#	magic-stop \
 	gitlab \
 	gitlab-build \
 	gitlab-run \
@@ -260,13 +260,13 @@ help-magic:
 	@./magic/cli.sh help
 
 remote-backup:
-	ssh  -p 2222 root@77.244.245.117 "cd /root/grundstein.legung && make backup"
+	@./cli.sh remote-backup
 
-copy-latest-backup:
-	echo "$(shell  ssh  -p 2222 root@77.244.245.117 ls -dAprt /root/backups/* | tail -n 1)"
-	scp -P 2222 root@77.244.245.117:"$(shell  ssh  -p 2222 root@77.244.245.117 ls -dAprt /root/backups/* | tail -n 1)" ../backups/ 
+remote-retrieve:
+	@./cli.sh remote-retrieve
 
-unpack-latest-backup:
-	#echo "$(shell cd ../ && ls -dAprt backups/* | tail -n 1)"
-	tar xvf "$(shell ls -dAprt ../backups/* | tail -n 1)" -C ../
+remote-unpack:
+	@./cli.sh remote-unpack
+
+remote-sync:	remote-backup remote-retrieve remote-unpack
 
