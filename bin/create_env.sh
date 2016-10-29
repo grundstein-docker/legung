@@ -20,8 +20,6 @@ GENERATED_POSTGRES_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 
 GENERATED_REDIS_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=55 2>/dev/null)"
 GENERATED_GITLAB_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=55 2>/dev/null)"
 GENERATED_REDMINE_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=55 2>/dev/null)"
-# GENERATED_MONGO_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=55 2>/dev/null)"
-# GENERATED_ROCKETCHAT_DB_PASS="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=55 2>/dev/null)"
 SECRET_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=55 2>/dev/null)"
 
 if [ -f "./GITLAB_SECRETS_DB_KEY_BASE" ]; then
@@ -53,8 +51,6 @@ OPENRESTY_FILE=$CONTAINER_DIR/openresty/ENV.sh
 NGINX_FILE=$CONTAINER_DIR/nginx/ENV.sh
 GITLAB_FILE=$CONTAINER_DIR/gitlab/ENV.sh
 REDMINE_FILE=$CONTAINER_DIR/redmine/ENV.sh
-# MONGODB_FILE=$CONTAINER_DIR/mongodb/ENV.sh
-# ROCKETCHAT_FILE=$CONTAINER_DIR/rocketchat/ENV.sh
 MAGIC_FILE=$CONTAINER_DIR/magic/ENV.sh
 
 REDMINE_CONFIG_DIR=$CONTAINER_DIR/redmine/config
@@ -74,14 +70,9 @@ REDMINE_DB_USER=redmine
 REDMINE_DB_PASS=$GENERATED_REDMINE_DB_PASS
 REDMINE_DB_NAME=redmine_production
 
-# ROCKETCHAT_DB_USER=rocketchat
-# ROCKETCHAT_DB_DATABASE=rocketchat
-# ROCKETCHAT_DB_PASS=$GENERATED_ROCKETCHAT_DB_PASS
-
 GITLAB_HOST_PORT_80=80
 GITLAB_HOST_PORT_443=443
 REDMINE_HOST_PORT=8889
-# ROCKETCHAT_HOST_PORT=8890
 
 GITLAB_HOST_NAME=gitlab.$HOST_NAME
 REDMINE_HOST_NAME=redmine.$HOST_NAME
@@ -144,26 +135,6 @@ echo "wrote $REDIS_FILE"
 
 OUT_DIR="./out"
 SRC_DIR="./src"
-
-# echo "\
-# #!/bin/bash
-# export CONTAINER_NAME=magic-resty
-# export CONTAINER_PORT_80=8080
-# export HOST_PORT_80=80
-# export CONTAINER_PORT_443=4343
-# export HOST_PORT_443=443
-
-# export OUT_DIR=$OUT_DIR
-# export SRC_DIR=$SRC_DIR
-
-# export EXPORT_PATH=/usr/local/openresty/nginx/sbin
-# export VERSION=1.9.12
-# export TARGET_DIR=/home/openresty/
-# export LUA_SRC_DIR=$SRC_DIR/lua
-# export HOST_SRC_DIR=$LUA_SRC_DIR/hosts
-# export SBIN=/usr/local/openresty/nginx/sbin
-# " > $OPENRESTY_FILE
-# echo "wrote $OPENRESTY_FILE"
 
 
 echo "\
@@ -242,35 +213,5 @@ $(cat ./REDMINE_SMTP)
 " > $REDMINE_FILE
 echo "wrote $REDMINE_FILE"
 
-# echo "\
-# #!/bin/bash
-
-# export CONTAINER_NAME=magic-mongodb
-
-# export CONTAINER_PORT_27017=27017
-# export HOST_PORT_27017=27017
-# export CONTAINER_PORT_28017=28017
-# export HOST_PORT_28017=28017
-
-# export ROCKETCHAT_DB_USER=$ROCKETCHAT_DB_USER
-# export ROCKETCHAT_DB_NAME=$ROCKETCHAT_DB_DATABASE
-# export ROCKETCHAT_DB_PASS=$ROCKETCHAT_DB_PASS
-# " > $MONGODB_FILE
-# echo "wrote $MONGODB_FILE"
-
-# echo "\
-# #!/bin/bash
-
-# export CONTAINER_NAME=magic-rocketchat
-# export HOSTNAME=rocket.$HOST_NAME
-
-# export CONTAINER_PORT_3000=3000
-# export HOST_PORT_3000=ROCKETCHAT_HOST_PORT
-
-# export ROCKETCHAT_DB_USER=$ROCKETCHAT_DB_USER
-# export ROCKETCHAT_DB_USER=$ROCKETCHAT_DB_PASS
-# export ROCKETCHAT_DB_NAME=$ROCKETCHAT_DB_NAME
-# " > $ROCKETCHAT_FILE
-# echo "wrote $ROCKETCHAT_FILE"
 
 echo "finished env generation"
