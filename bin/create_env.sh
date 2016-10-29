@@ -25,21 +25,21 @@ SECRET_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=55
 if [ -f "./GITLAB_SECRETS_DB_KEY_BASE" ]; then
   GITLAB_SECRETS_DB_KEY_BASE=$(cat ./GITLAB_SECRETS_DB_KEY_BASE)
 else
-  GITLAB_SECRETS_DB_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=55 2>/dev/null)"
+  GITLAB_SECRETS_DB_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=64 2>/dev/null)"
   echo $GITLAB_SECRETS_DB_KEY_BASE >> ./GITLAB_SECRETS_DB_KEY_BASE
 fi
 
 if [ -f "./GITLAB_SECRETS_SECRET_KEY_BASE" ]; then
   GITLAB_SECRETS_SECRET_KEY_BASE=$(cat ./GITLAB_SECRETS_SECRET_KEY_BASE)
 else
-  GITLAB_SECRETS_SECRET_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=55 2>/dev/null)"
+  GITLAB_SECRETS_SECRET_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=64 2>/dev/null)"
   echo $GITLAB_SECRETS_SECRET_KEY_BASE >> ./GITLAB_SECRETS_SECRET_KEY_BASE
 fi
 
 if [ -f "./GITLAB_SECRETS_OTP_KEY_BASE" ]; then
   GITLAB_SECRETS_OTP_KEY_BASE=$(cat ./GITLAB_SECRETS_OTP_KEY_BASE)
 else
-  GITLAB_SECRETS_OTP_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=55 2>/dev/null)"
+  GITLAB_SECRETS_OTP_KEY_BASE="$(base64 /dev/urandom | tr -dC '[:graph:]'  | dd ibs=1 count=64 2>/dev/null)"
   echo $GITLAB_SECRETS_OTP_KEY_BASE >> ./GITLAB_SECRETS_OTP_KEY_BASE
 fi
 
