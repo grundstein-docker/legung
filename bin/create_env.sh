@@ -214,7 +214,7 @@ $(cat ./GITLAB_GITHUB_KEYS)
 echo "wrote $GITLAB_FILE"
 
 echo "\
-#!/bin/bashHOST_
+#!/bin/bash
 
 export CONTAINER_NAME=$REDMINE_CONTAINER_NAME
 export HOSTNAME=$REDMINE_HOST_NAME
