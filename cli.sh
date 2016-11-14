@@ -39,7 +39,7 @@ function build() {
   postgres-build
   gitlab-build
   redmine-build
-  magic-build
+  # magic-build
   nginx-build
 }
 
@@ -48,8 +48,15 @@ function run() {
   postgres-run
   gitlab-run
   redmine-run
-  magic-run
+  # magic-run
   nginx-run
+}
+
+function network() {
+  docker network create \
+    --driver bridge \
+    --subnet 172.18.0.0/24 \
+    user-defined
 }
 
 function clean() {
@@ -68,6 +75,7 @@ function stop() {
   redis-stop
   nginx-stop
   gitlab-stop
+  redmine-stop
   echo-finished "stopping containers"
 }
 
@@ -108,7 +116,7 @@ function status() {
 
   container-status
 
-  magic-status
+  # magic-status
 
   echo-finished "status"
 }
@@ -160,7 +168,7 @@ function update() {
 
   container-update
 
-  magic-update
+  # magic-update
 
   echo-finished "update"
 }
@@ -433,7 +441,7 @@ function remote-backup() {
 }
 
 function remote-retrieve() {
-	scp -P 2222 root@77.244.245.117:`ssh  -p 2222 root@77.244.245.117 ls -dAprt /root/backups/* | tail -n 1` ../backups/ 
+	scp -P 2222 root@77.244.245.117:`ssh  -p 2222 root@77.244.245.117 ls -dAprt /root/backups/* | tail -n 1` ../backups/
 }
 
 function remote-unpack() {

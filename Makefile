@@ -5,6 +5,7 @@ CLI=./cli.sh
 	all \
 	env \
 	install \
+	network \
 	deploy \
 	build \
 	run \
@@ -62,6 +63,9 @@ env:
 	@${CLI} $@
 
 build:
+	@${CLI} $@
+
+network:
 	@${CLI} $@
 
 run:
