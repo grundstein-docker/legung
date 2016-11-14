@@ -25,6 +25,7 @@ function debug() {
   echo-start "debug"
 
   docker run \
+    --net user-defined \
     --interactive \
     --tty \
     --name "$CONTAINER_NAME" \
@@ -46,9 +47,8 @@ function remove() {
 function ip() {
   echo-start "get ip"
 
-  ip=$(python $PWD/../../bin/ip.py $CONTAINER_NAME)
-  echo "container $CONTAINER_NAME ip: $ip"
-  echo $ip > $PWD/SERVER_IP
+  echo "container $CONTAINER_NAME ip: $1"
+  echo $1 > $PWD/SERVER_IP
 
   echo-finished "get ip"
 }
